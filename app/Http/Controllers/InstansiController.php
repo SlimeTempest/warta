@@ -7,16 +7,37 @@ use App\Models\Instansi;
 
 class InstansiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Check if user is super admin
         if (auth()->user()->role !== 'super_admin') {
             return redirect()->route('login');
         }
 
-        $instansi = Instansi::orderBy('created_at', 'desc')->paginate(10);
-        
-        return view('dashboard.super_admin.instansi.index', compact('instansi'));
+        $query = Instansi::query();
+
+        // Search by nama or alamat
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                    ->orWhere('alamat', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by status
+        if ($request->filled('status') && $request->status !== 'all') {
+            $query->where('status', $request->status);
+        }
+
+        $instansi = $query->orderBy('created_at', 'desc')->paginate(15)->withQueryString();
+
+        // Get statistics
+        $totalInstansi = Instansi::count();
+        $activeInstansi = Instansi::where('status', 'active')->count();
+        $suspendedInstansi = Instansi::where('status', 'suspended')->count();
+
+        return view('dashboard.super_admin.instansi.index', compact('instansi', 'totalInstansi', 'activeInstansi', 'suspendedInstansi'));
     }
 
     public function create()

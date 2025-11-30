@@ -130,16 +130,41 @@
 
 @push('scripts')
 <script>
+    let selectedFiles = []; // Store selected files
+    
     function previewFiles(input) {
         const preview = document.getElementById('filePreview');
+        
+        // Update selectedFiles array
+        selectedFiles = Array.from(input.files);
+        
+        updatePreview();
+    }
+    
+    function updatePreview() {
+        const preview = document.getElementById('filePreview');
+        const input = document.getElementById('bukti_files');
         preview.innerHTML = '';
         
-        if (input.files && input.files.length > 0) {
+        if (selectedFiles.length > 0) {
             preview.classList.remove('hidden');
             
-            Array.from(input.files).forEach((file, index) => {
+            selectedFiles.forEach((file, index) => {
                 const div = document.createElement('div');
-                div.className = 'border rounded-lg overflow-hidden relative';
+                div.className = 'border rounded-lg overflow-hidden relative group';
+                div.setAttribute('data-file-index', index);
+                
+                // Cancel button
+                const cancelBtn = document.createElement('button');
+                cancelBtn.type = 'button';
+                cancelBtn.className = 'absolute top-2 right-2 bg-red-500 hover:bg-red-700 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity z-10';
+                cancelBtn.innerHTML = `
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                `;
+                cancelBtn.onclick = () => removeFile(index);
+                div.appendChild(cancelBtn);
                 
                 if (file.type.startsWith('image/')) {
                     const reader = new FileReader();
@@ -156,23 +181,25 @@
                     };
                     reader.readAsDataURL(file);
                 } else if (file.type === 'application/pdf') {
-                    div.innerHTML = `
-                        <div class="p-4 text-center">
-                            <svg class="w-12 h-12 mx-auto text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                            </svg>
-                            <p class="text-xs mt-2 text-gray-600 truncate">${file.name}</p>
-                        </div>
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'p-4 text-center';
+                    contentDiv.innerHTML = `
+                        <svg class="w-12 h-12 mx-auto text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                        <p class="text-xs mt-2 text-gray-600 truncate">${file.name}</p>
                     `;
+                    div.appendChild(contentDiv);
                 } else {
-                    div.innerHTML = `
-                        <div class="p-4 text-center">
-                            <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                            </svg>
-                            <p class="text-xs mt-2 text-gray-600 truncate">${file.name}</p>
-                        </div>
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'p-4 text-center';
+                    contentDiv.innerHTML = `
+                        <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                        <p class="text-xs mt-2 text-gray-600 truncate">${file.name}</p>
                     `;
+                    div.appendChild(contentDiv);
                 }
                 
                 preview.appendChild(div);
@@ -180,6 +207,24 @@
         } else {
             preview.classList.add('hidden');
         }
+    }
+    
+    function removeFile(index) {
+        // Remove file from selectedFiles array
+        selectedFiles.splice(index, 1);
+        
+        // Update file input using DataTransfer
+        const input = document.getElementById('bukti_files');
+        const dataTransfer = new DataTransfer();
+        
+        selectedFiles.forEach(file => {
+            dataTransfer.items.add(file);
+        });
+        
+        input.files = dataTransfer.files;
+        
+        // Update preview
+        updatePreview();
     }
 </script>
 @endpush

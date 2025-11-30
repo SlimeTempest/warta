@@ -124,6 +124,12 @@ class LaporanController extends Controller
             return redirect()->route('laporan.index');
         }
 
+        // Check if status is final (selesai/ditolak) - cannot edit
+        if (in_array($laporan->status, ['selesai', 'ditolak'])) {
+            return redirect()->route('laporan.show', $laporan)
+                ->with('error', 'Laporan tidak dapat diedit karena status sudah selesai atau ditolak.');
+        }
+
         // Only allow editing if status is 'terkirim'
         if ($laporan->status !== 'terkirim') {
             return redirect()->route('laporan.show', $laporan)
@@ -219,7 +225,12 @@ class LaporanController extends Controller
             return redirect()->route('laporan.index');
         }
 
-        // Only allow deleting if status is 'terkirim'
+        // Only allow deleting if status is 'terkirim' (not final status)
+        if (in_array($laporan->status, ['selesai', 'ditolak'])) {
+            return redirect()->route('laporan.show', $laporan)
+                ->with('error', 'Laporan tidak dapat dihapus karena status sudah selesai atau ditolak.');
+        }
+        
         if ($laporan->status !== 'terkirim') {
             return redirect()->route('laporan.show', $laporan)
                 ->with('error', 'Laporan tidak dapat dihapus karena sudah diproses.');

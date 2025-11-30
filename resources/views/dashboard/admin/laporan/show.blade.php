@@ -82,13 +82,21 @@
             </div>
         @endif
 
-        <!-- Form Update Status - Only show if admin has claimed this laporan -->
+        <!-- Form Update Status - Only show if admin has claimed this laporan and status is not final -->
         @if($laporan->admin_id === null)
             <div class="border-t pt-6">
                 <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                     <p class="text-yellow-800">
                         <strong>Perhatian:</strong> Laporan ini belum diambil oleh admin. 
                         <a href="{{ route('admin.laporan.index') }}" class="underline">Kembali ke daftar</a> dan klik "Ambil Laporan" untuk menanganinya.
+                    </p>
+                </div>
+            </div>
+        @elseif($laporan->admin_id === auth()->id() && in_array($laporan->status, ['selesai', 'ditolak']))
+            <div class="border-t pt-6">
+                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <p class="text-gray-700">
+                        <strong>Status Final:</strong> Laporan ini sudah selesai atau ditolak dan tidak dapat diubah lagi.
                     </p>
                 </div>
             </div>

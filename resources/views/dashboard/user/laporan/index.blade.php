@@ -54,7 +54,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <a href="{{ route('laporan.show', $item) }}" class="text-blue-600 hover:text-blue-900 mr-3">Detail</a>
-                            @if($item->status === 'terkirim')
+                            @if($item->status === 'terkirim' && !in_array($item->status, ['selesai', 'ditolak']))
                                 <a href="{{ route('laporan.edit', $item) }}" class="text-green-600 hover:text-green-900 mr-3">Edit</a>
                                 <form action="{{ route('laporan.destroy', $item) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus laporan ini?');">
                                     @csrf

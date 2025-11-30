@@ -63,35 +63,41 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex items-center space-x-3">
-                                @if($item->admin_id === null)
-                                    {{-- Laporan belum diambil --}}
-                                    <button 
-                                        type="button"
-                                        onclick="openClaimModal({{ $item->id }}, '{{ addslashes($item->judul) }}')"
-                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-xs flex items-center gap-1 transition-all duration-200 hover:shadow-md"
-                                    >
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                        Ambil Laporan
-                                    </button>
-                                    <form id="claim-form-{{ $item->id }}" action="{{ route('admin.laporan.claim', $item) }}" method="POST" class="hidden">
-                                        @csrf
-                                    </form>
-                                @elseif($item->admin_id === auth()->id())
-                                    {{-- Laporan diambil oleh admin ini --}}
-                                    <button 
-                                        onclick="openStatusModal({{ $item->id }}, '{{ $item->judul }}', '{{ $item->status }}', '{{ addslashes($item->catatan_admin ?? '') }}')"
-                                        class="text-green-600 hover:text-green-900 font-medium"
-                                    >
-                                        Ubah Status
-                                    </button>
+                                @if(!in_array($item->status, ['selesai', 'ditolak']))
+                                    @if($item->admin_id === null)
+                                        {{-- Laporan belum diambil --}}
+                                        <button 
+                                            type="button"
+                                            onclick="openClaimModal({{ $item->id }}, '{{ addslashes($item->judul) }}')"
+                                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-xs flex items-center gap-1 transition-all duration-200 hover:shadow-md"
+                                        >
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            Ambil Laporan
+                                        </button>
+                                        <form id="claim-form-{{ $item->id }}" action="{{ route('admin.laporan.claim', $item) }}" method="POST" class="hidden">
+                                            @csrf
+                                        </form>
+                                    @elseif($item->admin_id === auth()->id())
+                                        {{-- Laporan diambil oleh admin ini --}}
+                                        <button 
+                                            onclick="openStatusModal({{ $item->id }}, '{{ $item->judul }}', '{{ $item->status }}', '{{ addslashes($item->catatan_admin ?? '') }}')"
+                                            class="text-green-600 hover:text-green-900 font-medium"
+                                        >
+                                            Ubah Status
+                                        </button>
+                                        <span class="text-gray-300">|</span>
+                                    @else
+                                        {{-- Laporan diambil oleh admin lain --}}
+                                        <span class="text-gray-400 text-xs">Diambil oleh: {{ $item->admin->name }}</span>
+                                    @endif
                                     <span class="text-gray-300">|</span>
                                 @else
-                                    {{-- Laporan diambil oleh admin lain --}}
-                                    <span class="text-gray-400 text-xs">Diambil oleh: {{ $item->admin->name }}</span>
+                                    {{-- Status final - tidak bisa diubah --}}
+                                    <span class="text-gray-400 text-xs">Status final</span>
+                                    <span class="text-gray-300">|</span>
                                 @endif
-                                <span class="text-gray-300">|</span>
                                 <a href="{{ route('admin.laporan.show', $item) }}" class="text-blue-600 hover:text-blue-900">Detail</a>
                             </div>
                         </td>

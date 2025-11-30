@@ -9,6 +9,8 @@ use App\Http\Controllers\AdminInstansiController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\AdminLaporanController;
 use App\Http\Controllers\SuperAdminLaporanController;
+use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\ProfileController;
 
 // Public routes
 Route::get('/', function () {
@@ -22,6 +24,10 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('regi
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Password Reset routes (public)
+Route::get('/password/reset', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password/reset', [PasswordResetController::class, 'reset'])->name('password.update');
+
 // Dashboard routes (protected by auth middleware)
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard/user', [DashboardController::class, 'user'])->name('dashboard.user');
@@ -31,6 +37,7 @@ Route::middleware('auth')->group(function () {
     // User management routes (only for super admin)
     Route::resource('users', UserController::class)->except(['show']);
     Route::post('/users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
+    Route::post('/users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
     
     // Instansi management routes (only for super admin)
     Route::resource('instansi', InstansiController::class);
@@ -60,4 +67,11 @@ Route::middleware('auth')->group(function () {
         Route::put('/laporan/{laporan}', [SuperAdminLaporanController::class, 'update'])->name('laporan.update');
         Route::delete('/laporan/{laporan}', [SuperAdminLaporanController::class, 'destroy'])->name('laporan.destroy');
     });
+
+    // Profile routes (for all authenticated users)
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+    Route::post('/profile/generate-token', [ProfileController::class, 'generateNewToken'])->name('profile.generateToken');
 });

@@ -8,9 +8,9 @@
             </div>
             
             <div class="flex items-center space-x-4">
-                <span class="text-sm text-gray-600">
+                <a href="{{ route('profile.show') }}" class="text-sm text-gray-600 hover:text-gray-900 transition">
                     {{ auth()->user()->name }}
-                </span>
+                </a>
                 <span class="px-3 py-1 text-xs font-semibold rounded-full 
                     @if(auth()->user()->role === 'super_admin') bg-purple-100 text-purple-800
                     @elseif(auth()->user()->role === 'admin') bg-blue-100 text-blue-800

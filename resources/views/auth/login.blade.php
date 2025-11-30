@@ -24,6 +24,16 @@
             </div>
         @endif
 
+        @if(session('success'))
+            <div class="mb-4 bg-yellow-50 border-2 border-yellow-400 text-yellow-900 px-4 py-3 rounded">
+                <p class="font-bold mb-2">⚠️ PENTING: Token Reset Password Anda</p>
+                <p class="text-sm mb-2">{{ session('success') }}</p>
+                <p class="text-xs font-semibold text-red-700">
+                    WAJIB CATAT DAN SIMPAN TOKEN INI! Token ini diperlukan untuk reset password jika Anda lupa password.
+                </p>
+            </div>
+        @endif
+
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
@@ -93,8 +103,9 @@
             </div>
         </form>
 
-        <div class="mt-6 text-center text-sm text-gray-600">
+        <div class="mt-6 text-center text-sm text-gray-600 space-y-2">
             <p>Belum punya akun? <a href="{{ route('register') }}" class="text-blue-500 hover:text-blue-700">Daftar di sini</a></p>
+            <p><a href="{{ route('password.reset') }}" class="text-blue-500 hover:text-blue-700">Lupa password?</a></p>
         </div>
     </div>
 

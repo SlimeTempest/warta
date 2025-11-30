@@ -60,6 +60,15 @@ class AdminLaporanController extends Controller
                 ->with('error', 'Anda tidak memiliki akses ke laporan ini.');
         }
 
+        // Check if laporan status is final (selesai/ditolak) - cannot claim
+        if (in_array($laporan->status, ['selesai', 'ditolak'])) {
+            if ($request->wantsJson() || $request->expectsJson() || $request->header('Accept') === 'application/json') {
+                return response()->json(['success' => false, 'message' => 'Laporan dengan status selesai atau ditolak tidak dapat diambil.'], 403);
+            }
+            return redirect()->route('admin.laporan.index')
+                ->with('error', 'Laporan dengan status selesai atau ditolak tidak dapat diambil.');
+        }
+
         // Check if laporan is already claimed by another admin (with race condition prevention)
         if ($laporan->admin_id !== null && $laporan->admin_id !== auth()->id()) {
             if ($request->wantsJson() || $request->expectsJson() || $request->header('Accept') === 'application/json') {
@@ -119,6 +128,15 @@ class AdminLaporanController extends Controller
             }
             return redirect()->route('admin.laporan.index')
                 ->with('error', 'Anda tidak memiliki akses ke laporan ini.');
+        }
+
+        // Check if laporan status is final (selesai/ditolak) - cannot update
+        if (in_array($laporan->status, ['selesai', 'ditolak'])) {
+            if ($request->wantsJson() || $request->expectsJson() || $request->header('Accept') === 'application/json') {
+                return response()->json(['success' => false, 'message' => 'Status laporan yang sudah selesai atau ditolak tidak dapat diubah.'], 403);
+            }
+            return redirect()->back()
+                ->with('error', 'Status laporan yang sudah selesai atau ditolak tidak dapat diubah.');
         }
 
         // Check if laporan is claimed by this admin (or unclaimed)

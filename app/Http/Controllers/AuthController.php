@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
 
@@ -26,7 +27,13 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        // Normalize email: trim whitespace and convert to lowercase
+        $email = strtolower(trim($request->email));
+        
+        $credentials = [
+            'email' => $email,
+            'password' => $request->password,
+        ];
         $remember = $request->boolean('remember');
 
         if (Auth::attempt($credentials, $remember)) {
@@ -58,21 +65,34 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        // Normalize email: trim whitespace and convert to lowercase
+        $email = strtolower(trim($request->email));
+        
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+        // Double check email uniqueness with normalized email
+        if (User::where('email', $email)->exists()) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['email' => 'Email sudah terdaftar.']);
+        }
+
+        $resetToken = Str::random(32);
+
+        $user = User::create([
+            'name' => trim($request->name),
+            'email' => $email,
             'password' => Hash::make($request->password),
             'role' => 'user',
             'is_active' => true,
+            'reset_token' => $resetToken,
         ]);
 
-        return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
+        return redirect()->route('login')->with('success', 'Registrasi berhasil! Token reset password Anda: ' . $resetToken . ' - Simpan token ini dengan aman!');
     }
 
     public function logout(Request $request)

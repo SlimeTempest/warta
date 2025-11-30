@@ -81,7 +81,7 @@
                 Kembali
             </a>
             <div>
-                @if($laporan->status === 'terkirim')
+                @if($laporan->status === 'terkirim' && !in_array($laporan->status, ['selesai', 'ditolak']))
                     <a href="{{ route('laporan.edit', $laporan) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
                         Edit
                     </a>

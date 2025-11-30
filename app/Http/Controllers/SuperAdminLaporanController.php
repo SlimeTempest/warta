@@ -97,6 +97,7 @@ class SuperAdminLaporanController extends Controller
             return redirect()->route('login');
         }
 
+        // Super admin can edit any laporan regardless of status (for maintenance/emergency purposes)
         $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
@@ -182,6 +183,7 @@ class SuperAdminLaporanController extends Controller
             return redirect()->route('login');
         }
 
+        // Super admin can delete any laporan regardless of status (for maintenance/emergency purposes)
         // Delete files
         if ($laporan->bukti_files) {
             foreach ($laporan->bukti_files as $file) {

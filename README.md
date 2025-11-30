@@ -1,59 +1,294 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Warta.id - Sistem Pelaporan Masyarakat
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem pelaporan berbasis web yang memungkinkan masyarakat untuk membuat laporan dan admin untuk mengelola laporan tersebut.
 
-## About Laravel
+## 📋 Prerequisites
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Sebelum memulai, pastikan Anda telah menginstall:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   **PHP** >= 8.2
+-   **Composer** (PHP Package Manager)
+-   **Node.js** >= 18.x dan **npm**
+-   **MySQL** atau **MariaDB**
+-   **Git**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🚀 Setup Project (Setelah Clone)
 
-## Learning Laravel
+Ikuti langkah-langkah berikut untuk setup project:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 1. Clone Repository
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone <repository-url>
+cd warta
+```
 
-## Laravel Sponsors
+### 2. Install Dependencies PHP
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+composer install
+```
 
-### Premium Partners
+### 3. Install Dependencies JavaScript
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+npm install
+```
 
-## Contributing
+### 4. Setup Environment File
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+# Copy file .env.example ke .env (jika belum ada)
+cp .env.example .env
 
-## Code of Conduct
+# Atau jika menggunakan Windows
+copy .env.example .env
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 5. Generate Application Key
 
-## Security Vulnerabilities
+```bash
+php artisan key:generate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 6. Konfigurasi Database
 
-## License
+Edit file `.env` dan sesuaikan konfigurasi database:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=warta
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+**Pastikan database sudah dibuat terlebih dahulu!**
+
+```sql
+CREATE DATABASE warta;
+```
+
+### 7. Jalankan Migration dan Seeder
+
+```bash
+php artisan migrate --seed
+```
+
+Ini akan:
+
+-   Membuat semua tabel di database
+-   Menambahkan user Super Admin default:
+    -   **Email**: `superadmin@warta.id`
+    -   **Password**: `password`
+
+### 8. Buat Storage Link (Jika diperlukan)
+
+```bash
+php artisan storage:link
+```
+
+### 9. Build Assets (Development)
+
+```bash
+npm run dev
+```
+
+Atau untuk production:
+
+```bash
+npm run build
+```
+
+### 10. Jalankan Server
+
+Buka terminal baru dan jalankan:
+
+```bash
+php artisan serve
+```
+
+Aplikasi akan berjalan di: `http://127.0.0.1:8000`
+
+## 📝 Checklist Setup
+
+Gunakan checklist ini untuk memastikan semua langkah sudah dilakukan:
+
+-   [ ] Repository sudah di-clone
+-   [ ] `composer install` sudah dijalankan
+-   [ ] `npm install` sudah dijalankan
+-   [ ] File `.env` sudah dibuat dan dikonfigurasi
+-   [ ] `php artisan key:generate` sudah dijalankan
+-   [ ] Database sudah dibuat
+-   [ ] Konfigurasi database di `.env` sudah benar
+-   [ ] `php artisan migrate --seed` sudah dijalankan
+-   [ ] `npm run dev` atau `npm run build` sudah dijalankan
+-   [ ] `php artisan serve` sudah dijalankan
+-   [ ] Aplikasi bisa diakses di browser
+
+## 🔐 Default Login Credentials
+
+Setelah menjalankan seeder, Anda bisa login dengan:
+
+**Super Admin:**
+
+-   Email: `superadmin@warta.id`
+-   Password: `password`
+
+**⚠️ PENTING:** Segera ubah password setelah login pertama kali!
+
+## 👥 Roles & Permissions
+
+### User (Masyarakat)
+
+-   Dapat membuat, melihat, edit, dan hapus laporan sendiri (hanya status 'terkirim')
+-   Dapat melihat riwayat status laporan
+-   Dashboard menampilkan statistik laporan mereka
+
+### Admin
+
+-   Dapat melihat laporan dari instansi yang ditugaskan
+-   Dapat mengambil (claim) laporan
+-   Dapat mengubah status laporan yang sudah di-claim
+-   Dapat menambahkan catatan pada laporan
+-   Dashboard menampilkan statistik laporan instansi mereka
+
+### Super Admin
+
+-   Dapat mengelola semua user (create, edit, delete, activate/deactivate)
+-   Dapat mengelola instansi (create, edit, delete, suspend/activate)
+-   Dapat mengelola assignment admin ke instansi
+-   Dapat melihat dan mengelola semua laporan
+-   Dapat edit/hapus laporan dengan status apapun
+-   Dashboard menampilkan statistik keseluruhan sistem
+
+## 📁 Struktur Project
+
+```
+warta/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/     # Controllers untuk semua fitur
+│   └── Models/              # Eloquent Models
+├── database/
+│   ├── migrations/          # Database migrations
+│   └── seeders/            # Database seeders
+├── resources/
+│   └── views/               # Blade templates
+│       ├── auth/            # Login & Register
+│       ├── dashboard/       # Dashboard untuk setiap role
+│       └── layouts/         # Layout templates
+├── routes/
+│   └── web.php             # Web routes
+└── public/
+    └── uploads/             # File uploads (bukti laporan)
+```
+
+## 🛠️ Perintah Berguna
+
+### Development
+
+```bash
+# Jalankan development server dengan hot reload
+php artisan serve
+npm run dev
+
+# Atau jalankan keduanya sekaligus
+composer run dev
+```
+
+### Database
+
+```bash
+# Reset database dan jalankan seeder
+php artisan migrate:fresh --seed
+
+# Buat migration baru
+php artisan make:migration create_nama_tabel
+
+# Buat seeder baru
+php artisan make:seeder NamaSeeder
+```
+
+### Cache
+
+```bash
+# Clear semua cache
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+
+# Atau clear semua sekaligus
+php artisan optimize:clear
+```
+
+### Build Production
+
+```bash
+# Build assets untuk production
+npm run build
+
+# Optimize aplikasi
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+## 🧪 Testing
+
+Gunakan file `TESTING_CHECKLIST.md` untuk panduan testing lengkap.
+
+## 📚 Fitur Utama
+
+-   ✅ Authentication & Authorization (Login, Register, Logout)
+-   ✅ Role-based Access Control (User, Admin, Super Admin)
+-   ✅ User Management (Super Admin)
+-   ✅ Instansi Management (Super Admin)
+-   ✅ Admin-Instansi Assignment (Super Admin)
+-   ✅ Laporan Management (User)
+-   ✅ Laporan Processing (Admin)
+-   ✅ Status History & Timeline
+-   ✅ File Upload (Bukti Laporan)
+-   ✅ Search & Filter
+-   ✅ Real-time Statistics Dashboard
+
+## 🐛 Troubleshooting
+
+### Error: "SQLSTATE[HY000] [1045] Access denied"
+
+-   Pastikan username dan password database di `.env` benar
+-   Pastikan database sudah dibuat
+
+### Error: "Class 'PDO' not found"
+
+-   Install extension PDO untuk PHP
+-   Di XAMPP/Laragon: biasanya sudah terinstall
+
+### Error: "npm: command not found"
+
+-   Install Node.js dari https://nodejs.org/
+-   Restart terminal setelah install
+
+### Error: "Composer: command not found"
+
+-   Install Composer dari https://getcomposer.org/
+-   Restart terminal setelah install
+
+### File upload tidak berfungsi
+
+-   Pastikan folder `public/uploads/bukti` ada dan writable
+-   Cek permission folder (chmod 755 atau 777)
+
+## 📄 License
+
+MIT License
+
+## 👨‍💻 Developer
+
+Dibuat dengan Laravel Framework
+
+---
+
+**Selamat coding! 🚀**
