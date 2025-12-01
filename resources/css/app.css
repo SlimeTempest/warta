@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Marcellus&display=swap');
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -6,6 +7,289 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Jost', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: 'Marcellus', serif;
+    
+    /* Kaira-inspired color palette */
+    --color-primary: #0d6efd;
+    --color-primary-dark: #0a58ca;
+    --color-text: #8f8f8f;
+    --color-text-dark: #212529;
+    --color-border: #e9ecef;
+    --color-bg-light: #f8f9fa;
+}
+
+/* Kaira-inspired global styles */
+body {
+    font-family: 'Jost', sans-serif;
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Marcellus', serif;
+    color: var(--color-text-dark);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+/* Card styles inspired by Kaira */
+.kaira-card {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.kaira-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Button styles */
+.kaira-btn {
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 12px 30px;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.kaira-btn-primary {
+    background-color: var(--color-text-dark);
+    color: white;
+    border-color: var(--color-text-dark);
+}
+
+.kaira-btn-primary:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+/* Navigation styles */
+.kaira-nav {
+    background: white;
+    border-bottom: 1px solid var(--color-border);
+    padding: 15px 0;
+}
+
+.kaira-nav-link {
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    padding: 10px 20px;
+    transition: color 0.3s ease;
+}
+
+.kaira-nav-link:hover {
+    color: var(--color-primary);
+}
+
+/* Sidebar styles */
+.kaira-sidebar {
+    background: white;
+    border-right: 1px solid var(--color-border);
+    min-height: 100vh;
+}
+
+.kaira-sidebar-link {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    color: var(--color-text);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.kaira-sidebar-link:hover {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-dark);
+    border-left-color: var(--color-primary);
+}
+
+.kaira-sidebar-link.active {
+    background-color: var(--color-bg-light);
+    color: var(--color-text-dark);
+    border-left-color: var(--color-primary);
+    font-weight: 500;
+}
+
+/* Form styles */
+.kaira-input {
+    font-family: 'Jost', sans-serif;
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+}
+
+.kaira-input:focus {
+    outline: none;
+    border-color: var(--color-text-dark);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+/* Table styles */
+.kaira-table {
+    font-family: 'Jost', sans-serif;
+}
+
+.kaira-table thead {
+    background-color: var(--color-bg-light);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.kaira-table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 12px;
+    color: var(--color-text-dark);
+    padding: 15px;
+}
+
+.kaira-table td {
+    padding: 15px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* Badge styles */
+.kaira-badge {
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 5px 12px;
+    border-radius: 0;
+}
+
+/* Custom Modal/Alert Styles */
+.kaira-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.kaira-modal-overlay.show {
+    opacity: 1;
+}
+
+.kaira-modal {
+    background: white;
+    border: 1px solid #e9ecef;
+    padding: 0;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    font-family: 'Jost', sans-serif;
+}
+
+.kaira-modal-overlay.show .kaira-modal {
+    transform: scale(1);
+}
+
+.kaira-modal-header {
+    padding: 25px 30px;
+    border-bottom: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+}
+
+.kaira-modal-title {
+    font-family: 'Marcellus', serif;
+    font-size: 24px;
+    color: #212529;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.kaira-modal-body {
+    padding: 30px;
+    color: #8f8f8f;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.kaira-modal-footer {
+    padding: 20px 30px;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    background-color: #f8f9fa;
+}
+
+.kaira-modal-btn {
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 12px 30px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    min-width: 100px;
+}
+
+.kaira-modal-btn-primary {
+    background-color: #212529;
+    color: white;
+    border-color: #212529;
+}
+
+.kaira-modal-btn-primary:hover {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.kaira-modal-btn-secondary {
+    background-color: white;
+    color: #8f8f8f;
+    border-color: #e9ecef;
+}
+
+.kaira-modal-btn-secondary:hover {
+    background-color: #f8f9fa;
+    border-color: #212529;
+    color: #212529;
+}
+
+/* Section heading */
+.kaira-section-heading {
+    font-family: 'Marcellus', serif;
+    font-size: 36px;
+    color: var(--color-text-dark);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.kaira-section-subtitle {
+    font-family: 'Jost', sans-serif;
+    color: var(--color-text);
+    font-size: 16px;
+    margin-bottom: 40px;
 }

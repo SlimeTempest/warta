@@ -4,188 +4,272 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto">
-    <div class="mb-6 flex justify-between items-center">
+    <div style="margin-bottom: 50px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
         <div>
-            <h1 class="text-3xl font-bold text-gray-900">Kelola User</h1>
-            <p class="text-gray-600 mt-2">Kelola semua akun pengguna, admin, dan super admin</p>
+            <h1 class="kaira-section-heading" style="font-family: 'Marcellus', serif; font-size: 42px; color: #212529; margin-bottom: 10px; letter-spacing: 1px;">Kelola User</h1>
+            <p style="font-family: 'Jost', sans-serif; color: #8f8f8f; font-size: 16px;">Kelola semua akun pengguna, admin, dan super admin</p>
         </div>
-        <a href="{{ route('users.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            + Tambah Admin
+        <a href="{{ route('users.create') }}" 
+            class="kaira-btn kaira-btn-primary"
+            style="font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 12px 30px; background-color: #212529; color: white; border: 1px solid #212529; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s ease; font-size: 14px;"
+            onmouseover="this.style.backgroundColor='#0d6efd'; this.style.borderColor='#0d6efd'"
+            onmouseout="this.style.backgroundColor='#212529'; this.style.borderColor='#212529'">
+            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Tambah Admin
         </a>
     </div>
 
-    <!-- Statistics Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-        <div class="bg-white rounded-lg shadow p-4">
-            <p class="text-sm text-gray-600 mb-1">Total User</p>
-            <p class="text-2xl font-bold text-gray-900">{{ $totalUsers }}</p>
+    <!-- Statistics Cards - Kaira Style -->
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+        <div class="kaira-card" style="background: white; border: 1px solid #e9ecef; padding: 30px; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 10px 30px rgba(0, 0, 0, 0.08)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+            <p style="font-family: 'Jost', sans-serif; font-size: 13px; color: #8f8f8f; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; margin-bottom: 10px;">Total User</p>
+            <p style="font-family: 'Marcellus', serif; font-size: 36px; color: #212529; letter-spacing: 0.5px;">{{ $totalUsers }}</p>
         </div>
-        <div class="bg-white rounded-lg shadow p-4">
-            <p class="text-sm text-gray-600 mb-1">Total Admin</p>
-            <p class="text-2xl font-bold text-blue-600">{{ $totalAdmins }}</p>
+        <div class="kaira-card" style="background: white; border: 1px solid #e9ecef; padding: 30px; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 10px 30px rgba(0, 0, 0, 0.08)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+            <p style="font-family: 'Jost', sans-serif; font-size: 13px; color: #8f8f8f; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; margin-bottom: 10px;">Total Admin</p>
+            <p style="font-family: 'Marcellus', serif; font-size: 36px; color: #0d6efd; letter-spacing: 0.5px;">{{ $totalAdmins }}</p>
         </div>
-        <div class="bg-white rounded-lg shadow p-4">
-            <p class="text-sm text-gray-600 mb-1">Super Admin</p>
-            <p class="text-2xl font-bold text-purple-600">{{ $totalSuperAdmins }}</p>
+        <div class="kaira-card" style="background: white; border: 1px solid #e9ecef; padding: 30px; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 10px 30px rgba(0, 0, 0, 0.08)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+            <p style="font-family: 'Jost', sans-serif; font-size: 13px; color: #8f8f8f; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; margin-bottom: 10px;">Super Admin</p>
+            <p style="font-family: 'Marcellus', serif; font-size: 36px; color: #7c3aed; letter-spacing: 0.5px;">{{ $totalSuperAdmins }}</p>
         </div>
-        <div class="bg-white rounded-lg shadow p-4">
-            <p class="text-sm text-gray-600 mb-1">Aktif</p>
-            <p class="text-2xl font-bold text-green-600">{{ $totalActive }}</p>
+        <div class="kaira-card" style="background: white; border: 1px solid #e9ecef; padding: 30px; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 10px 30px rgba(0, 0, 0, 0.08)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+            <p style="font-family: 'Jost', sans-serif; font-size: 13px; color: #8f8f8f; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; margin-bottom: 10px;">Aktif</p>
+            <p style="font-family: 'Marcellus', serif; font-size: 36px; color: #10b981; letter-spacing: 0.5px;">{{ $totalActive }}</p>
         </div>
-        <div class="bg-white rounded-lg shadow p-4">
-            <p class="text-sm text-gray-600 mb-1">Nonaktif</p>
-            <p class="text-2xl font-bold text-red-600">{{ $totalInactive }}</p>
+        <div class="kaira-card" style="background: white; border: 1px solid #e9ecef; padding: 30px; transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 10px 30px rgba(0, 0, 0, 0.08)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+            <p style="font-family: 'Jost', sans-serif; font-size: 13px; color: #8f8f8f; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; margin-bottom: 10px;">Nonaktif</p>
+            <p style="font-family: 'Marcellus', serif; font-size: 36px; color: #ef4444; letter-spacing: 0.5px;">{{ $totalInactive }}</p>
         </div>
     </div>
 
-    <!-- Search and Filter -->
-    <div class="bg-white rounded-lg shadow p-6 mb-6">
-        <form method="GET" action="{{ route('users.index') }}" class="flex flex-col md:flex-row gap-4">
-            <!-- Search -->
-            <div class="flex-1">
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Cari</label>
-                <div class="relative">
-                    <input 
-                        type="text" 
-                        id="search" 
-                        name="search" 
-                        value="{{ request('search') }}"
-                        placeholder="Cari nama atau email..."
-                        class="shadow appearance-none border rounded w-full py-2 px-3 pl-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    >
-                    <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
+    <!-- Search and Filter - Kaira Style -->
+    <div class="kaira-card" style="background: white; border: 1px solid #e9ecef; padding: 30px; margin-bottom: 30px;">
+        <form method="GET" action="{{ route('users.index') }}" style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <!-- Search -->
+                <div style="flex: 1;">
+                    <label for="search" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Cari</label>
+                    <div style="position: relative;">
+                        <input 
+                            type="text" 
+                            id="search" 
+                            name="search" 
+                            value="{{ request('search') }}"
+                            placeholder="Cari nama atau email..."
+                            class="kaira-input"
+                            style="font-family: 'Jost', sans-serif; border: 1px solid #e9ecef; width: 100%; padding: 12px 15px 12px 45px; transition: all 0.3s ease; font-size: 14px;"
+                            onfocus="this.style.borderColor='#212529'; this.style.boxShadow='0 0 0 3px rgba(13, 110, 253, 0.1)'"
+                            onblur="this.style.borderColor='#e9ecef'; this.style.boxShadow='none'"
+                        >
+                        <svg style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: #8f8f8f;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Filter Role -->
-            <div class="md:w-48">
-                <label for="role" class="block text-sm font-medium text-gray-700 mb-2">Filter Role</label>
-                <select 
-                    id="role" 
-                    name="role" 
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    onchange="this.form.submit()"
-                >
-                    <option value="all" {{ request('role') === 'all' || !request('role') ? 'selected' : '' }}>Semua Role</option>
-                    <option value="user" {{ request('role') === 'user' ? 'selected' : '' }}>User</option>
-                    <option value="admin" {{ request('role') === 'admin' ? 'selected' : '' }}>Admin</option>
-                    <option value="super_admin" {{ request('role') === 'super_admin' ? 'selected' : '' }}>Super Admin</option>
-                </select>
-            </div>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <!-- Filter Role -->
+                    <div style="flex: 1; min-width: 180px; position: relative;">
+                        <label for="role" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Filter Role</label>
+                        <div style="position: relative;">
+                            <select 
+                                id="role" 
+                                name="role" 
+                                class="kaira-input"
+                                style="font-family: 'Jost', sans-serif; border: 1px solid #e9ecef; width: 100%; padding: 12px 40px 12px 15px; transition: all 0.3s ease; font-size: 14px; background-color: white; appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                                onchange="this.form.submit()"
+                                onfocus="this.style.borderColor='#212529'; this.style.boxShadow='0 0 0 3px rgba(13, 110, 253, 0.1)'"
+                                onblur="this.style.borderColor='#e9ecef'; this.style.boxShadow='none'"
+                            >
+                                <option value="all" {{ request('role') === 'all' || !request('role') ? 'selected' : '' }}>Semua Role</option>
+                                <option value="user" {{ request('role') === 'user' ? 'selected' : '' }}>User</option>
+                                <option value="admin" {{ request('role') === 'admin' ? 'selected' : '' }}>Admin</option>
+                                <option value="super_admin" {{ request('role') === 'super_admin' ? 'selected' : '' }}>Super Admin</option>
+                            </select>
+                            <div style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); pointer-events: none;">
+                                <svg style="width: 16px; height: 16px; color: #8f8f8f;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Filter Status -->
-            <div class="md:w-48">
-                <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Filter Status</label>
-                <select 
-                    id="status" 
-                    name="status" 
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    onchange="this.form.submit()"
-                >
-                    <option value="" {{ !request('status') ? 'selected' : '' }}>Semua Status</option>
-                    <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Aktif</option>
-                    <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Nonaktif</option>
-                </select>
-            </div>
+                    <!-- Filter Status -->
+                    <div style="flex: 1; min-width: 180px; position: relative;">
+                        <label for="status" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">Filter Status</label>
+                        <div style="position: relative;">
+                            <select 
+                                id="status" 
+                                name="status" 
+                                class="kaira-input"
+                                style="font-family: 'Jost', sans-serif; border: 1px solid #e9ecef; width: 100%; padding: 12px 40px 12px 15px; transition: all 0.3s ease; font-size: 14px; background-color: white; appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                                onchange="this.form.submit()"
+                                onfocus="this.style.borderColor='#212529'; this.style.boxShadow='0 0 0 3px rgba(13, 110, 253, 0.1)'"
+                                onblur="this.style.borderColor='#e9ecef'; this.style.boxShadow='none'"
+                            >
+                                <option value="" {{ !request('status') ? 'selected' : '' }}>Semua Status</option>
+                                <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Aktif</option>
+                                <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Nonaktif</option>
+                            </select>
+                            <div style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); pointer-events: none;">
+                                <svg style="width: 16px; height: 16px; color: #8f8f8f;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Submit Button -->
-            <div class="flex items-end">
-                <button 
-                    type="submit" 
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full md:w-auto"
-                >
-                    Cari
-                </button>
-                @if(request('search') || request('role') || request('status'))
-                    <a 
-                        href="{{ route('users.index') }}" 
-                        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2"
-                    >
-                        Reset
-                    </a>
-                @endif
+                    <!-- Submit Button -->
+                    <div style="display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap;">
+                        <button 
+                            type="submit" 
+                            class="kaira-btn kaira-btn-primary"
+                            style="font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 12px 25px; background-color: #212529; color: white; border: 1px solid #212529; cursor: pointer; transition: all 0.3s ease; font-size: 14px;"
+                            onmouseover="this.style.backgroundColor='#0d6efd'; this.style.borderColor='#0d6efd'"
+                            onmouseout="this.style.backgroundColor='#212529'; this.style.borderColor='#212529'"
+                        >
+                            Cari
+                        </button>
+                        @if(request('search') || request('role') || request('status'))
+                            <a 
+                                href="{{ route('users.index') }}" 
+                                class="kaira-btn"
+                                style="font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 12px 25px; background-color: #f8f9fa; color: #212529; border: 1px solid #e9ecef; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.3s ease; font-size: 14px;"
+                                onmouseover="this.style.backgroundColor='#e9ecef'; this.style.borderColor='#dee2e6'"
+                                onmouseout="this.style.backgroundColor='#f8f9fa'; this.style.borderColor='#e9ecef'"
+                            >
+                                Reset
+                            </a>
+                        @endif
+                    </div>
+                </div>
             </div>
         </form>
     </div>
 
-    <!-- Users Table -->
-    <div class="bg-white rounded-lg shadow overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+    <!-- Users Table - Kaira Style -->
+    <div class="kaira-card" style="background: white; border: 1px solid #e9ecef; overflow: hidden;">
+        <div style="overflow-x: auto;">
+            <table class="kaira-table" style="width: 100%; border-collapse: collapse;">
+                <thead style="background-color: #f8f9fa; border-bottom: 2px solid #e9ecef;">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Daftar</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                        <th style="padding: 20px; text-align: left; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 600; color: #212529; text-transform: uppercase; letter-spacing: 0.5px;">Nama</th>
+                        <th style="padding: 20px; text-align: left; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 600; color: #212529; text-transform: uppercase; letter-spacing: 0.5px;">Email</th>
+                        <th style="padding: 20px; text-align: left; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 600; color: #212529; text-transform: uppercase; letter-spacing: 0.5px;">Role</th>
+                        <th style="padding: 20px; text-align: center; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 600; color: #212529; text-transform: uppercase; letter-spacing: 0.5px;">Status</th>
+                        <th style="padding: 20px; text-align: left; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 600; color: #212529; text-transform: uppercase; letter-spacing: 0.5px;">Tanggal Daftar</th>
+                        <th style="padding: 20px; text-align: center; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 600; color: #212529; text-transform: uppercase; letter-spacing: 0.5px;">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody>
                     @forelse($users as $user)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
+                        <tr style="border-bottom: 1px solid #e9ecef; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#f8f9fa'" onmouseout="this.style.backgroundColor='white'">
+                            <td style="padding: 20px; white-space: nowrap;">
+                                <div style="font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; color: #212529;">{{ $user->name }}</div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-500">{{ $user->email }}</div>
+                            <td style="padding: 20px; white-space: nowrap;">
+                                <div style="font-family: 'Jost', sans-serif; font-size: 14px; color: #8f8f8f;">{{ $user->email }}</div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                    @if($user->role === 'super_admin') bg-purple-100 text-purple-800
-                                    @elseif($user->role === 'admin') bg-blue-100 text-blue-800
-                                    @else bg-gray-100 text-gray-800
-                                    @endif">
+                            <td style="padding: 20px; white-space: nowrap;">
+                                <span class="kaira-badge" style="
+                                    font-family: 'Jost', sans-serif;
+                                    font-size: 11px;
+                                    font-weight: 600;
+                                    padding: 6px 14px;
+                                    border-radius: 20px;
+                                    text-transform: uppercase;
+                                    letter-spacing: 0.5px;
+                                    display: inline-block;
+                                    @if($user->role === 'super_admin') 
+                                        background-color: #f3e8ff; 
+                                        color: #7c3aed;
+                                    @elseif($user->role === 'admin') 
+                                        background-color: #dbeafe; 
+                                        color: #0d6efd;
+                                    @else 
+                                        background-color: #f3f4f6; 
+                                        color: #6b7280;
+                                    @endif
+                                ">
                                     {{ ucfirst(str_replace('_', ' ', $user->role)) }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td style="padding: 20px; white-space: nowrap; text-align: center;">
                                 @if($user->id === auth()->id())
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                    <span class="kaira-badge" style="font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 600; padding: 6px 14px; border-radius: 20px; background-color: #f3f4f6; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block;">
                                         Aktif (Anda)
                                     </span>
                                 @else
-                                    <label class="relative inline-flex items-center cursor-pointer group">
-                                        <input 
-                                            type="checkbox" 
-                                            class="sr-only peer toggle-status" 
-                                            data-user-id="{{ $user->id }}"
-                                            {{ $user->is_active ? 'checked' : '' }}
-                                        >
-                                        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500 peer-disabled:opacity-50 peer-disabled:cursor-not-allowed"></div>
-                                        <span class="ml-3 text-sm font-medium text-gray-700 status-label-{{ $user->id }}">
-                                            {{ $user->is_active ? 'Aktif' : 'Nonaktif' }}
-                                        </span>
-                                    </label>
+                                    <div style="display: flex; align-items: center; justify-content: center;">
+                                        <label style="position: relative; display: inline-flex; align-items: center; cursor: pointer;">
+                                            <input 
+                                                type="checkbox" 
+                                                class="toggle-status" 
+                                                data-user-id="{{ $user->id }}"
+                                                {{ $user->is_active ? 'checked' : '' }}
+                                                style="position: absolute; opacity: 0; width: 0; height: 0;"
+                                            >
+                                            <div id="toggle-container-{{ $user->id }}" style="
+                                                position: relative;
+                                                width: 48px;
+                                                height: 26px;
+                                                background-color: {{ $user->is_active ? '#10b981' : '#e5e7eb' }};
+                                                border-radius: 13px;
+                                                transition: background-color 0.3s ease;
+                                            ">
+                                                <div id="toggle-circle-{{ $user->id }}" style="
+                                                    position: absolute;
+                                                    top: 2px;
+                                                    left: {{ $user->is_active ? '24px' : '2px' }};
+                                                    width: 22px;
+                                                    height: 22px;
+                                                    background-color: white;
+                                                    border-radius: 50%;
+                                                    transition: left 0.3s ease;
+                                                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                                                "></div>
+                                            </div>
+                                        </label>
+                                    </div>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ $user->created_at->format('d/m/Y') }}
+                            <td style="padding: 20px; white-space: nowrap; text-align: left;">
+                                <div style="font-family: 'Jost', sans-serif; font-size: 14px; color: #8f8f8f;">{{ $user->created_at->format('d/m/Y') }}</div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <a href="{{ route('users.edit', $user) }}" class="text-blue-600 hover:text-blue-900 mr-3">Edit</a>
-                                @if($user->id !== auth()->id())
-                                    <form action="{{ route('users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun ini?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Hapus</button>
-                                    </form>
-                                @else
-                                    <span class="text-gray-400">-</span>
-                                @endif
+                            <td style="padding: 20px; white-space: nowrap; text-align: center;">
+                                <div style="display: inline-flex; align-items: center; gap: 15px;">
+                                    <a href="{{ route('users.edit', $user) }}" style="font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; color: #0d6efd; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#0a58ca'" onmouseout="this.style.color='#0d6efd'">Edit</a>
+                                    @if($user->id !== auth()->id())
+                                        <form action="{{ route('users.destroy', $user) }}" method="POST" style="display: inline;" onsubmit="return kairaConfirmSubmit(event, 'Apakah Anda yakin ingin menghapus akun ini?', 'Hapus Akun');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" style="font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; color: #ef4444; background: none; border: none; cursor: pointer; transition: color 0.3s ease; padding: 0;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='#ef4444'">Hapus</button>
+                                        </form>
+                                    @else
+                                        <span style="font-family: 'Jost', sans-serif; font-size: 13px; color: #d1d5db;">-</span>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-4 text-center text-gray-500">
-                                @if(request('search') || request('role') || request('status'))
-                                    Tidak ada user yang sesuai dengan filter
-                                @else
-                                    Belum ada user
-                                @endif
+                            <td colspan="6" style="padding: 60px 20px; text-align: center;">
+                                <div style="width: 64px; height: 64px; background-color: #f8f9fa; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                                    <svg style="width: 32px; height: 32px; color: #8f8f8f;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                </div>
+                                <p style="font-family: 'Jost', sans-serif; font-size: 16px; font-weight: 500; color: #212529; margin-bottom: 5px;">
+                                    @if(request('search') || request('role') || request('status'))
+                                        Tidak ada user yang sesuai dengan filter
+                                    @else
+                                        Belum ada user
+                                    @endif
+                                </p>
+                                <p style="font-family: 'Jost', sans-serif; font-size: 14px; color: #8f8f8f;">User yang terdaftar akan muncul di sini</p>
                             </td>
                         </tr>
                     @endforelse
@@ -194,7 +278,7 @@
         </div>
 
         @if($users->hasPages())
-            <div class="px-6 py-4 border-t">
+            <div style="padding: 20px; border-top: 1px solid #e9ecef;">
                 {{ $users->links() }}
             </div>
         @endif
@@ -210,15 +294,18 @@
             toggle.addEventListener('change', function() {
                 const userId = this.getAttribute('data-user-id');
                 const isChecked = this.checked;
-                const label = document.querySelector('.status-label-' + userId);
-                const row = this.closest('tr');
+                const toggleContainer = document.getElementById('toggle-container-' + userId);
+                const toggleCircle = document.getElementById('toggle-circle-' + userId);
                 
                 // Disable toggle during request
                 this.disabled = true;
                 
-                // Show loading state
-                if (label) {
-                    label.textContent = 'Memproses...';
+                // Update toggle visual state
+                if (toggleContainer) {
+                    toggleContainer.style.backgroundColor = isChecked ? '#10b981' : '#e5e7eb';
+                }
+                if (toggleCircle) {
+                    toggleCircle.style.left = isChecked ? '24px' : '2px';
                 }
                 
                 // Make AJAX request
@@ -234,22 +321,25 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Update label
-                        if (label) {
-                            label.textContent = data.is_active ? 'Aktif' : 'Nonaktif';
+                        // Update toggle visual state
+                        if (toggleContainer) {
+                            toggleContainer.style.backgroundColor = data.is_active ? '#10b981' : '#e5e7eb';
+                        }
+                        if (toggleCircle) {
+                            toggleCircle.style.left = data.is_active ? '24px' : '2px';
                         }
                         
                         // Show success message
                         showNotification(data.message, 'success');
-                        
-                        // Update row styling if needed
-                        if (row) {
-                            row.classList.toggle('bg-green-50', data.is_active);
-                            row.classList.toggle('bg-red-50', !data.is_active);
-                        }
                     } else {
                         // Revert toggle
                         this.checked = !isChecked;
+                        if (toggleContainer) {
+                            toggleContainer.style.backgroundColor = !isChecked ? '#10b981' : '#e5e7eb';
+                        }
+                        if (toggleCircle) {
+                            toggleCircle.style.left = !isChecked ? '24px' : '2px';
+                        }
                         showNotification(data.error || 'Terjadi kesalahan', 'error');
                     }
                 })
@@ -257,6 +347,12 @@
                     console.error('Error:', error);
                     // Revert toggle
                     this.checked = !isChecked;
+                    if (toggleContainer) {
+                        toggleContainer.style.backgroundColor = !isChecked ? '#10b981' : '#e5e7eb';
+                    }
+                    if (toggleCircle) {
+                        toggleCircle.style.left = !isChecked ? '24px' : '2px';
+                    }
                     showNotification('Terjadi kesalahan saat memperbarui status', 'error');
                 })
                 .finally(() => {
@@ -270,23 +366,61 @@
     function showNotification(message, type) {
         // Create notification element
         const notification = document.createElement('div');
-        notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg ${
-            type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-        }`;
-        notification.textContent = message;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            font-family: 'Jost', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+            background-color: ${type === 'success' ? '#10b981' : '#ef4444'};
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideInRight 0.3s ease;
+        `;
+        
+        // Add icon
+        const icon = document.createElement('div');
+        icon.innerHTML = type === 'success' 
+            ? '<svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
+            : '<svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+        notification.appendChild(icon);
+        
+        // Add message
+        const messageText = document.createTextNode(message);
+        notification.appendChild(messageText);
         
         // Add to page
         document.body.appendChild(notification);
         
         // Remove after 3 seconds
         setTimeout(() => {
-            notification.style.transition = 'opacity 0.5s';
+            notification.style.transition = 'opacity 0.5s, transform 0.5s';
             notification.style.opacity = '0';
+            notification.style.transform = 'translateX(100%)';
             setTimeout(() => {
                 notification.remove();
             }, 500);
         }, 3000);
     }
 </script>
+<style>
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+</style>
 @endpush
 @endsection

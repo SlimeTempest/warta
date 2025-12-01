@@ -4,120 +4,126 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto">
-    <div class="mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">Laporan Masuk</h1>
-        <p class="text-gray-600 mt-2">Laporan yang masuk ke instansi yang Anda kelola</p>
+    <!-- Page Header - Kaira Style -->
+    <div style="margin-bottom: 50px;">
+        <h1 class="kaira-section-heading" style="font-family: 'Marcellus', serif; font-size: 42px; color: #212529; margin-bottom: 10px; letter-spacing: 1px;">Laporan Masuk</h1>
+        <p style="font-family: 'Jost', sans-serif; color: #8f8f8f; font-size: 16px;">Laporan yang masuk ke instansi yang Anda kelola</p>
     </div>
 
-    <div class="bg-white rounded-lg shadow overflow-hidden">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Judul</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pelapor</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Instansi</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Admin</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                @forelse($laporan as $item)
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">{{ $item->judul }}</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500">{{ $item->user->name }}</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500">{{ $item->instansi->nama }}</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500">
-                                @if($item->admin)
+    <!-- Card-based Layout - Kaira Style -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @forelse($laporan as $item)
+            <div class="kaira-card" style="background: white; border: 1px solid #e9ecef; padding: 30px; transition: all 0.3s ease; display: flex; flex-direction: column;" onmouseover="this.style.boxShadow='0 10px 30px rgba(0, 0, 0, 0.08)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)'">
+                <div style="display: flex; justify-content: space-between; align-items: start; gap: 15px; margin-bottom: 20px; flex: 1;">
+                    <div style="flex: 1; min-width: 0;">
+                        <a href="{{ route('admin.laporan.show', $item) }}" style="text-decoration: none; display: block;">
+                            <h3 style="font-family: 'Jost', sans-serif; font-size: 18px; font-weight: 600; color: #212529; margin-bottom: 12px; line-height: 1.4; transition: color 0.3s ease;" onmouseover="this.style.color='#0d6efd'" onmouseout="this.style.color='#212529'">
+                                {{ $item->judul }}
+                            </h3>
+                        </a>
+                        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-family: 'Jost', sans-serif; font-size: 12px; color: #8f8f8f; line-height: 1.6;">
+                            <span>Pelapor: {{ $item->user->name }}</span>
+                            <span>•</span>
+                            <span>{{ $item->instansi->nama }}</span>
+                            @if($item->admin)
+                                <span>•</span>
+                                <span>
                                     @if($item->admin_id === auth()->id())
-                                        <span class="text-green-600 font-medium">Anda</span>
+                                        <span style="color: #10b981; font-weight: 500;">Anda</span>
                                     @else
-                                        {{ $item->admin->name }}
+                                        Admin: {{ $item->admin->name }}
                                     @endif
-                                @else
-                                    <span class="text-gray-400">-</span>
-                                @endif
+                                </span>
+                            @endif
+                            <span>•</span>
+                            <span style="font-size: 11px;">{{ $item->created_at->format('d M Y, H:i') }}</span>
+                        </div>
+                    </div>
+                    <div style="flex-shrink: 0;">
+                        <span class="kaira-badge" style="
+                            font-family: 'Jost', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; padding: 5px 12px; font-weight: 500;
+                            @if($item->status === 'terkirim') background-color: #dbeafe; color: #2563eb;
+                            @elseif($item->status === 'diverifikasi') background-color: #fef3c7; color: #d97706;
+                            @elseif($item->status === 'diproses') background-color: #e9d5ff; color: #7c3aed;
+                            @elseif($item->status === 'selesai') background-color: #d1fae5; color: #10b981;
+                            @else background-color: #fee2e2; color: #ef4444;
+                            @endif">
+                            {{ ucfirst($item->status) }}
+                        </span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 12px; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                    @if(!in_array($item->status, ['selesai', 'ditolak']))
+                        @if($item->admin_id === null)
+                            <button 
+                                type="button"
+                                onclick="openClaimModal({{ $item->id }}, '{{ addslashes($item->judul) }}')"
+                                class="kaira-btn"
+                                style="flex: 1; font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 10px 20px; background-color: #10b981; color: white; border: 1px solid #10b981; cursor: pointer; transition: all 0.3s ease; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;"
+                                onmouseover="this.style.backgroundColor='#059669'; this.style.borderColor='#059669'"
+                                onmouseout="this.style.backgroundColor='#10b981'; this.style.borderColor='#10b981'"
+                            >
+                                <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Ambil Laporan</span>
+                            </button>
+                            <form id="claim-form-{{ $item->id }}" action="{{ route('admin.laporan.claim', $item) }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        @elseif($item->admin_id === auth()->id())
+                            <button 
+                                onclick="openStatusModal({{ $item->id }}, '{{ $item->judul }}', '{{ $item->status }}', '{{ addslashes($item->catatan_admin ?? '') }}')"
+                                class="kaira-btn kaira-btn-primary"
+                                style="flex: 1; font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 10px 20px; background-color: #212529; color: white; border: 1px solid #212529; cursor: pointer; transition: all 0.3s ease; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;"
+                                onmouseover="this.style.backgroundColor='#0d6efd'; this.style.borderColor='#0d6efd'"
+                                onmouseout="this.style.backgroundColor='#212529'; this.style.borderColor='#212529'"
+                            >
+                                <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                </svg>
+                                <span>Ubah Status</span>
+                            </button>
+                        @else
+                            <div style="flex: 1; text-align: center;">
+                                <span style="font-family: 'Jost', sans-serif; font-size: 11px; color: #8f8f8f;">Diambil oleh:</span>
+                                <span style="font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; color: #212529; display: block;">{{ $item->admin->name }}</span>
                             </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                @if($item->status === 'terkirim') bg-blue-100 text-blue-800
-                                @elseif($item->status === 'diverifikasi') bg-yellow-100 text-yellow-800
-                                @elseif($item->status === 'diproses') bg-purple-100 text-purple-800
-                                @elseif($item->status === 'selesai') bg-green-100 text-green-800
-                                @else bg-red-100 text-red-800
-                                @endif">
-                                {{ ucfirst($item->status) }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {{ $item->created_at->format('d/m/Y') }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex items-center space-x-3">
-                                @if(!in_array($item->status, ['selesai', 'ditolak']))
-                                    @if($item->admin_id === null)
-                                        {{-- Laporan belum diambil --}}
-                                        <button 
-                                            type="button"
-                                            onclick="openClaimModal({{ $item->id }}, '{{ addslashes($item->judul) }}')"
-                                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-xs flex items-center gap-1 transition-all duration-200 hover:shadow-md"
-                                        >
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                            Ambil Laporan
-                                        </button>
-                                        <form id="claim-form-{{ $item->id }}" action="{{ route('admin.laporan.claim', $item) }}" method="POST" class="hidden">
-                                            @csrf
-                                        </form>
-                                    @elseif($item->admin_id === auth()->id())
-                                        {{-- Laporan diambil oleh admin ini --}}
-                                        <button 
-                                            onclick="openStatusModal({{ $item->id }}, '{{ $item->judul }}', '{{ $item->status }}', '{{ addslashes($item->catatan_admin ?? '') }}')"
-                                            class="text-green-600 hover:text-green-900 font-medium"
-                                        >
-                                            Ubah Status
-                                        </button>
-                                        <span class="text-gray-300">|</span>
-                                    @else
-                                        {{-- Laporan diambil oleh admin lain --}}
-                                        <span class="text-gray-400 text-xs">Diambil oleh: {{ $item->admin->name }}</span>
-                                    @endif
-                                    <span class="text-gray-300">|</span>
-                                @else
-                                    {{-- Status final - tidak bisa diubah --}}
-                                    <span class="text-gray-400 text-xs">Status final</span>
-                                    <span class="text-gray-300">|</span>
-                                @endif
-                                <a href="{{ route('admin.laporan.show', $item) }}" class="text-blue-600 hover:text-blue-900">Detail</a>
-                            </div>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="8" class="px-6 py-4 text-center text-gray-500">
-                            Belum ada laporan masuk
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-
-        @if($laporan->hasPages())
-            <div class="px-6 py-4 border-t">
-                {{ $laporan->links() }}
+                        @endif
+                    @else
+                        <div style="flex: 1; text-align: center;">
+                            <span style="font-family: 'Jost', sans-serif; font-size: 11px; color: #8f8f8f; font-style: italic;">Status final</span>
+                        </div>
+                    @endif
+                    <a href="{{ route('admin.laporan.show', $item) }}" style="padding: 10px; background-color: #f8f9fa; color: #212529; border: 1px solid #e9ecef; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center;" title="Detail" onmouseover="this.style.backgroundColor='#e9ecef'" onmouseout="this.style.backgroundColor='#f8f9fa'">
+                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </a>
+                </div>
             </div>
-        @endif
+        @empty
+            <div style="grid-column: 1 / -1;">
+                <div class="kaira-card" style="background: white; border: 1px solid #e9ecef; text-align: center; padding: 80px 20px;">
+                    <div style="width: 64px; height: 64px; background-color: #f8f9fa; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                        <svg style="width: 32px; height: 32px; color: #8f8f8f;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <p style="font-family: 'Jost', sans-serif; font-size: 16px; font-weight: 500; color: #212529; margin-bottom: 5px;">Belum ada laporan masuk</p>
+                    <p style="font-family: 'Jost', sans-serif; font-size: 14px; color: #8f8f8f;">Laporan yang masuk akan muncul di sini</p>
+                </div>
+            </div>
+        @endforelse
     </div>
+
+    @if($laporan->hasPages())
+        <div class="mt-8">
+            {{ $laporan->links() }}
+        </div>
+    @endif
 </div>
 
 <!-- Modal Claim Laporan -->
@@ -182,109 +188,118 @@
 </div>
 
 <!-- Modal Ubah Status -->
-<div id="statusModal" class="hidden fixed inset-0 overflow-y-auto h-full w-full z-50" style="background-color: rgba(0, 0, 0, 0.1); backdrop-filter: blur(4px);">
-    <div class="relative top-20 mx-auto p-6 border w-full max-w-md shadow-xl rounded-lg bg-white">
-        <div class="mt-3">
-            <!-- Header -->
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-bold text-gray-900">Ubah Status Laporan</h3>
-                <button onclick="closeStatusModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
+<div id="statusModal" style="display: none; position: fixed; inset: 0; overflow-y: auto; z-index: 9999; background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: white; border: 1px solid #e9ecef; width: 100%; max-width: 500px; padding: 40px; position: relative;">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h3 style="font-family: 'Marcellus', serif; font-size: 28px; color: #212529; letter-spacing: 0.5px;">Ubah Status Laporan</h3>
+            <button onclick="closeStatusModal()" style="background: none; border: none; cursor: pointer; color: #8f8f8f; padding: 5px; transition: color 0.3s ease;" onmouseover="this.style.color='#212529'" onmouseout="this.style.color='#8f8f8f'">
+                <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Laporan Info -->
+        <div style="margin-bottom: 25px; padding: 20px; background-color: #f8f9fa; border: 1px solid #e9ecef;">
+            <p style="font-family: 'Jost', sans-serif; font-size: 11px; color: #8f8f8f; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Laporan</p>
+            <p style="font-family: 'Jost', sans-serif; font-size: 16px; font-weight: 600; color: #212529; margin-bottom: 8px;" id="modalJudul"></p>
+            <p style="font-family: 'Jost', sans-serif; font-size: 12px; color: #8f8f8f;">Status saat ini: <span id="modalStatusCurrentValue" style="font-weight: 500; color: #212529;"></span></p>
+        </div>
+
+        <form id="statusForm" method="POST" onsubmit="handleStatusSubmit(event)">
+            @csrf
+            @method('PUT')
+
+            <!-- Status Selection with Visual Indicator -->
+            <div style="margin-bottom: 25px;">
+                <label for="modal_status" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Status Baru <span style="color: #dc3545;">*</span>
+                </label>
+                <div style="position: relative;">
+                    <select 
+                        id="modal_status" 
+                        name="status" 
+                        required
+                        onchange="updateStatusPreview(this.value)"
+                        class="kaira-input"
+                        style="font-family: 'Jost', sans-serif; border: 1px solid #e9ecef; width: 100%; padding: 12px 40px 12px 15px; transition: all 0.3s ease; font-size: 14px; background-color: white; appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                        onfocus="this.style.borderColor='#212529'; this.style.boxShadow='0 0 0 3px rgba(13, 110, 253, 0.1)'"
+                        onblur="this.style.borderColor='#e9ecef'; this.style.boxShadow='none'"
+                    >
+                        <option value="terkirim">Terkirim</option>
+                        <option value="diverifikasi">Diverifikasi</option>
+                        <option value="diproses">Diproses</option>
+                        <option value="ditolak">Ditolak</option>
+                        <option value="selesai">Selesai</option>
+                    </select>
+                    <!-- Dropdown Arrow (right side) -->
+                    <div style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); pointer-events: none;">
+                        <svg style="width: 16px; height: 16px; color: #8f8f8f;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                </div>
+                <!-- Status Preview Badge with Visual Feedback -->
+                <div id="statusPreview" style="margin-top: 15px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-family: 'Jost', sans-serif; font-size: 12px; color: #8f8f8f;">Status yang dipilih:</span>
+                        <span id="statusPreviewBadge" class="kaira-badge" style="font-family: 'Jost', sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 14px; font-weight: 500;"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Catatan/Deskripsi with Character Counter -->
+            <div style="margin-bottom: 30px;">
+                <label for="modal_catatan" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Catatan / Deskripsi <span style="color: #8f8f8f; font-weight: normal; text-transform: none;">(Opsional)</span>
+                </label>
+                <div style="position: relative;">
+                    <textarea 
+                        id="modal_catatan" 
+                        name="catatan" 
+                        rows="4"
+                        maxlength="500"
+                        oninput="updateCharCount(this)"
+                        class="kaira-input"
+                        style="font-family: 'Jost', sans-serif; border: 1px solid #e9ecef; width: 100%; padding: 12px 60px 12px 15px; transition: all 0.3s ease; font-size: 14px; resize: vertical; min-height: 100px;"
+                        placeholder="Tambahkan catatan atau deskripsi untuk perubahan status ini. Misalnya: 'Laporan sedang dalam proses verifikasi dokumen', 'Menunggu persetujuan dari pihak terkait', dll."
+                        onfocus="this.style.borderColor='#212529'; this.style.boxShadow='0 0 0 3px rgba(13, 110, 253, 0.1)'"
+                        onblur="this.style.borderColor='#e9ecef'; this.style.boxShadow='none'"
+                    ></textarea>
+                    <div style="position: absolute; bottom: 12px; right: 15px; font-family: 'Jost', sans-serif; font-size: 11px; color: #8f8f8f;">
+                        <span id="charCount">0</span>/500
+                    </div>
+                </div>
+                <p style="font-family: 'Jost', sans-serif; font-size: 12px; color: #8f8f8f; margin-top: 8px; line-height: 1.5;">
+                    <span style="font-weight: 500;">Tip:</span> Jelaskan alasan perubahan status atau langkah selanjutnya yang akan dilakukan.
+                </p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; align-items: center; justify-content: flex-end; gap: 15px; padding-top: 25px; border-top: 1px solid #e9ecef;">
+                <button 
+                    type="button"
+                    onclick="closeStatusModal()" 
+                    class="kaira-btn"
+                    style="font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 12px 25px; background-color: #f8f9fa; color: #212529; border: 1px solid #e9ecef; cursor: pointer; transition: all 0.3s ease; font-size: 13px;"
+                    onmouseover="this.style.backgroundColor='#e9ecef'; this.style.borderColor='#dee2e6'"
+                    onmouseout="this.style.backgroundColor='#f8f9fa'; this.style.borderColor='#e9ecef'"
+                >
+                    Batal
+                </button>
+                <button 
+                    type="submit" 
+                    id="submitStatusBtn"
+                    class="kaira-btn kaira-btn-primary"
+                    style="font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 12px 30px; background-color: #212529; color: white; border: 1px solid #212529; cursor: pointer; transition: all 0.3s ease; font-size: 14px;"
+                    onmouseover="this.style.backgroundColor='#0d6efd'; this.style.borderColor='#0d6efd'"
+                    onmouseout="this.style.backgroundColor='#212529'; this.style.borderColor='#212529'"
+                >
+                    Update Status
                 </button>
             </div>
-            
-            <!-- Laporan Info -->
-            <div class="mb-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                <p class="text-xs text-gray-500 mb-1">Laporan</p>
-                <p class="text-sm font-semibold text-gray-900" id="modalJudul"></p>
-                <p class="text-xs text-gray-500 mt-1">Status saat ini: <span id="modalStatusCurrentValue"></span></p>
-            </div>
-
-            <form id="statusForm" method="POST" onsubmit="handleStatusSubmit(event)">
-                @csrf
-                @method('PUT')
-
-                <!-- Status Selection with Visual Indicator -->
-                <div class="mb-4">
-                    <label for="modal_status" class="block text-gray-700 text-sm font-semibold mb-2">
-                        Status Baru <span class="text-red-500">*</span>
-                    </label>
-                    <div class="relative">
-                        <select 
-                            id="modal_status" 
-                            name="status" 
-                            required
-                            onchange="updateStatusPreview(this.value)"
-                            class="shadow appearance-none border rounded-lg w-full py-2.5 px-4 pr-8 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
-                        >
-                            <option value="terkirim">Terkirim</option>
-                            <option value="diverifikasi">Diverifikasi</option>
-                            <option value="diproses">Diproses</option>
-                            <option value="ditolak">Ditolak</option>
-                            <option value="selesai">Selesai</option>
-                        </select>
-                        <!-- Dropdown Arrow (right side) -->
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <!-- Status Preview Badge with Visual Feedback -->
-                    <div id="statusPreview" class="mt-3">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs text-gray-500">Status yang dipilih:</span>
-                            <span id="statusPreviewBadge" class="inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium transition-all"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Catatan/Deskripsi with Character Counter -->
-                <div class="mb-4">
-                    <label for="modal_catatan" class="block text-gray-700 text-sm font-semibold mb-2">
-                        <span>Catatan / Deskripsi</span>
-                        <span class="text-gray-400 font-normal text-xs ml-1">(Opsional)</span>
-                    </label>
-                    <div class="relative">
-                        <textarea 
-                            id="modal_catatan" 
-                            name="catatan" 
-                            rows="4"
-                            maxlength="500"
-                            oninput="updateCharCount(this)"
-                            class="shadow appearance-none border rounded-lg w-full py-2.5 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none"
-                            placeholder="Tambahkan catatan atau deskripsi untuk perubahan status ini. Misalnya: 'Laporan sedang dalam proses verifikasi dokumen', 'Menunggu persetujuan dari pihak terkait', dll."
-                        ></textarea>
-                        <div class="absolute bottom-2 right-2 text-xs text-gray-400">
-                            <span id="charCount">0</span>/500
-                        </div>
-                    </div>
-                    <p class="text-xs text-gray-500 mt-1">
-                        <span class="font-medium">Tip:</span> Jelaskan alasan perubahan status atau langkah selanjutnya yang akan dilakukan.
-                    </p>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex items-center justify-end gap-3 pt-4 border-t">
-                    <button 
-                        type="button"
-                        onclick="closeStatusModal()" 
-                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-lg transition-colors"
-                    >
-                        Batal
-                    </button>
-                    <button 
-                        type="submit" 
-                        id="submitStatusBtn"
-                        class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg"
-                    >
-                        Update Status
-                    </button>
-                </div>
-            </form>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -437,7 +452,7 @@
         });
         
         // Show modal
-        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
     }
     
     // Update status preview badge
@@ -450,34 +465,41 @@
         const statusConfig = {
             'terkirim': { 
                 label: 'Terkirim', 
-                class: 'bg-blue-50 text-blue-700 border border-blue-200'
+                bg: '#e7f3ff',
+                text: '#0d6efd'
             },
             'diverifikasi': { 
                 label: 'Diverifikasi', 
-                class: 'bg-yellow-50 text-yellow-700 border border-yellow-200'
+                bg: '#fff4e6',
+                text: '#f59e0b'
             },
             'diproses': { 
                 label: 'Diproses', 
-                class: 'bg-purple-50 text-purple-700 border border-purple-200'
+                bg: '#ffe4cc',
+                text: '#f97316'
             },
             'ditolak': { 
                 label: 'Ditolak', 
-                class: 'bg-red-50 text-red-700 border border-red-200'
+                bg: '#fee2e2',
+                text: '#ef4444'
             },
             'selesai': { 
                 label: 'Selesai', 
-                class: 'bg-green-50 text-green-700 border border-green-200'
+                bg: '#d1fae5',
+                text: '#10b981'
             }
         };
         
         const config = statusConfig[status] || { 
             label: status, 
-            class: 'bg-gray-50 text-gray-700 border border-gray-200'
+            bg: '#f8f9fa',
+            text: '#8f8f8f'
         };
         
         badge.textContent = config.label;
-        badge.className = `inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium transition-all ${config.class}`;
-        preview.classList.remove('hidden');
+        badge.style.backgroundColor = config.bg;
+        badge.style.color = config.text;
+        preview.style.display = 'block';
     }
     
     // Get status label
@@ -562,11 +584,13 @@
         // Reset form
         if (form) {
             form.reset();
-            document.getElementById('charCount').textContent = '0';
-            document.getElementById('statusPreview').classList.add('hidden');
+            const charCount = document.getElementById('charCount');
+            if (charCount) charCount.textContent = '0';
+            const statusPreview = document.getElementById('statusPreview');
+            if (statusPreview) statusPreview.style.display = 'none';
         }
         
-        modal.classList.add('hidden');
+        modal.style.display = 'none';
     }
 
     // Close modal when clicking outside

@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
-<body class="bg-gray-50">
+<body class="bg-white" style="font-family: 'Jost', sans-serif;">
     <div class="min-h-screen flex flex-col">
         @auth
             @include('partials.header')
@@ -23,22 +23,22 @@
                 @endif
             @endauth
             
-            <main class="flex-1 p-6 @auth @else mx-auto max-w-md w-full @endauth">
+            <main class="flex-1 p-6 lg:p-8 @auth @else mx-auto max-w-md w-full @endauth" style="background-color: #f8f9fa;">
                 @if(session('success'))
-                    <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                    <div class="mb-4 bg-green-50 border-l-4 border-green-400 text-green-700 px-4 py-3" style="border-left-width: 4px;">
                         {{ session('success') }}
                     </div>
                 @endif
 
                 @if(session('error'))
-                    <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                    <div class="mb-4 bg-red-50 border-l-4 border-red-400 text-red-700 px-4 py-3" style="border-left-width: 4px;">
                         {{ session('error') }}
                     </div>
                 @endif
 
                 @if($errors->any())
-                    <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                        <ul>
+                    <div class="mb-4 bg-red-50 border-l-4 border-red-400 text-red-700 px-4 py-3" style="border-left-width: 4px;">
+                        <ul class="list-disc list-inside">
                             @foreach($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach

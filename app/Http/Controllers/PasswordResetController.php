@@ -54,6 +54,7 @@ class PasswordResetController extends Controller
         }
 
         // Update password
+        // Note: Token reset password TIDAK diubah, masih bisa digunakan lagi di masa depan
         $user->update([
             'password' => Hash::make($request->password),
         ]);

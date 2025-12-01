@@ -84,6 +84,7 @@ class ProfileController extends Controller
         }
 
         // Update password
+        // Note: Token reset password TIDAK berubah saat mengubah password
         $user->update([
             'password' => Hash::make($request->password),
         ]);

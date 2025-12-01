@@ -4,19 +4,19 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto">
-    <div class="mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">Edit Laporan</h1>
-        <p class="text-gray-600 mt-2">Edit informasi laporan (Super Admin dapat mengubah semua field termasuk status)</p>
+    <div style="margin-bottom: 50px;">
+        <h1 class="kaira-section-heading" style="font-family: 'Marcellus', serif; font-size: 42px; color: #212529; margin-bottom: 10px; letter-spacing: 1px;">Edit Laporan</h1>
+        <p style="font-family: 'Jost', sans-serif; color: #8f8f8f; font-size: 16px;">Edit informasi laporan (Super Admin dapat mengubah semua field termasuk status)</p>
     </div>
 
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="kaira-card" style="background: white; border: 1px solid #e9ecef; padding: 40px;">
         <form method="POST" action="{{ route('super-admin.laporan.update', $laporan) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
-            <div class="mb-4">
-                <label for="judul" class="block text-gray-700 text-sm font-bold mb-2">
-                    Judul Laporan <span class="text-red-500">*</span>
+            <div style="margin-bottom: 30px;">
+                <label for="judul" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Judul Laporan <span style="color: #dc3545;">*</span>
                 </label>
                 <input 
                     type="text" 
@@ -25,62 +25,100 @@
                     value="{{ old('judul', $laporan->judul) }}"
                     required 
                     autofocus
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('judul') border-red-500 @enderror"
+                    class="kaira-input"
+                    style="font-family: 'Jost', sans-serif; border: 1px solid {{ $errors->has('judul') ? '#dc3545' : '#e9ecef' }}; width: 100%; padding: 12px 15px; transition: all 0.3s ease; font-size: 14px;"
+                    onfocus="this.style.borderColor='#212529'; this.style.boxShadow='0 0 0 3px rgba(13, 110, 253, 0.1)'"
+                    onblur="this.style.borderColor='{{ $errors->has('judul') ? '#dc3545' : '#e9ecef' }}'; this.style.boxShadow='none'"
                 >
                 @error('judul')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <p style="font-family: 'Jost', sans-serif; color: #dc3545; font-size: 12px; margin-top: 8px; display: flex; align-items: center; gap: 5px;">
+                        <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        {{ $message }}
+                    </p>
                 @enderror
             </div>
 
-            <div class="mb-4">
-                <label for="instansi_id" class="block text-gray-700 text-sm font-bold mb-2">
-                    Tujuan Instansi <span class="text-red-500">*</span>
+            <div style="margin-bottom: 30px;">
+                <label for="instansi_id" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Tujuan Instansi <span style="color: #dc3545;">*</span>
                 </label>
-                <select 
-                    id="instansi_id" 
-                    name="instansi_id" 
-                    required
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('instansi_id') border-red-500 @enderror"
-                >
-                    <option value="">Pilih Instansi</option>
-                    @foreach($instansi as $item)
-                        <option value="{{ $item->id }}" {{ old('instansi_id', $laporan->instansi_id) == $item->id ? 'selected' : '' }}>
-                            {{ $item->nama }}
-                        </option>
-                    @endforeach
-                </select>
+                <div style="position: relative;">
+                    <select 
+                        id="instansi_id" 
+                        name="instansi_id" 
+                        required
+                        class="kaira-input"
+                        style="font-family: 'Jost', sans-serif; border: 1px solid {{ $errors->has('instansi_id') ? '#dc3545' : '#e9ecef' }}; width: 100%; padding: 12px 40px 12px 15px; transition: all 0.3s ease; font-size: 14px; background-color: white; appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                        onfocus="this.style.borderColor='#212529'; this.style.boxShadow='0 0 0 3px rgba(13, 110, 253, 0.1)'"
+                        onblur="this.style.borderColor='{{ $errors->has('instansi_id') ? '#dc3545' : '#e9ecef' }}'; this.style.boxShadow='none'"
+                    >
+                        <option value="">Pilih Instansi</option>
+                        @foreach($instansi as $item)
+                            <option value="{{ $item->id }}" {{ old('instansi_id', $laporan->instansi_id) == $item->id ? 'selected' : '' }}>
+                                {{ $item->nama }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); pointer-events: none;">
+                        <svg style="width: 16px; height: 16px; color: #8f8f8f;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                </div>
                 @error('instansi_id')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <p style="font-family: 'Jost', sans-serif; color: #dc3545; font-size: 12px; margin-top: 8px; display: flex; align-items: center; gap: 5px;">
+                        <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        {{ $message }}
+                    </p>
                 @enderror
             </div>
 
-            <div class="mb-4">
-                <label for="status" class="block text-gray-700 text-sm font-bold mb-2">
-                    Status <span class="text-red-500">*</span>
+            <div style="margin-bottom: 30px;">
+                <label for="status" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Status <span style="color: #dc3545;">*</span>
                 </label>
-                <select 
-                    id="status" 
-                    name="status" 
-                    required
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('status') border-red-500 @enderror"
-                >
-                    <option value="terkirim" {{ old('status', $laporan->status) == 'terkirim' ? 'selected' : '' }}>Terkirim</option>
-                    <option value="diverifikasi" {{ old('status', $laporan->status) == 'diverifikasi' ? 'selected' : '' }}>Diverifikasi</option>
-                    <option value="diproses" {{ old('status', $laporan->status) == 'diproses' ? 'selected' : '' }}>Diproses</option>
-                    <option value="selesai" {{ old('status', $laporan->status) == 'selesai' ? 'selected' : '' }}>Selesai</option>
-                    <option value="ditolak" {{ old('status', $laporan->status) == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
-                </select>
-                <p class="text-xs text-gray-500 mt-1">
+                <div style="position: relative;">
+                    <select 
+                        id="status" 
+                        name="status" 
+                        required
+                        class="kaira-input"
+                        style="font-family: 'Jost', sans-serif; border: 1px solid {{ $errors->has('status') ? '#dc3545' : '#e9ecef' }}; width: 100%; padding: 12px 40px 12px 15px; transition: all 0.3s ease; font-size: 14px; background-color: white; appearance: none; -webkit-appearance: none; -moz-appearance: none;"
+                        onfocus="this.style.borderColor='#212529'; this.style.boxShadow='0 0 0 3px rgba(13, 110, 253, 0.1)'"
+                        onblur="this.style.borderColor='{{ $errors->has('status') ? '#dc3545' : '#e9ecef' }}'; this.style.boxShadow='none'"
+                    >
+                        <option value="terkirim" {{ old('status', $laporan->status) == 'terkirim' ? 'selected' : '' }}>Terkirim</option>
+                        <option value="diverifikasi" {{ old('status', $laporan->status) == 'diverifikasi' ? 'selected' : '' }}>Diverifikasi</option>
+                        <option value="diproses" {{ old('status', $laporan->status) == 'diproses' ? 'selected' : '' }}>Diproses</option>
+                        <option value="selesai" {{ old('status', $laporan->status) == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                        <option value="ditolak" {{ old('status', $laporan->status) == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
+                    </select>
+                    <div style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); pointer-events: none;">
+                        <svg style="width: 16px; height: 16px; color: #8f8f8f;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                </div>
+                <p style="font-family: 'Jost', sans-serif; font-size: 12px; color: #8f8f8f; margin-top: 8px;">
                     Super Admin dapat mengubah status laporan ke status apapun.
                 </p>
                 @error('status')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <p style="font-family: 'Jost', sans-serif; color: #dc3545; font-size: 12px; margin-top: 8px; display: flex; align-items: center; gap: 5px;">
+                        <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        {{ $message }}
+                    </p>
                 @enderror
             </div>
 
-            <div class="mb-4">
-                <label for="lokasi" class="block text-gray-700 text-sm font-bold mb-2">
-                    Lokasi Kejadian <span class="text-red-500">*</span>
+            <div style="margin-bottom: 30px;">
+                <label for="lokasi" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Lokasi Kejadian <span style="color: #dc3545;">*</span>
                 </label>
                 <input 
                     type="text" 
@@ -88,48 +126,64 @@
                     name="lokasi" 
                     value="{{ old('lokasi', $laporan->lokasi) }}"
                     required
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('lokasi') border-red-500 @enderror"
+                    class="kaira-input"
+                    style="font-family: 'Jost', sans-serif; border: 1px solid {{ $errors->has('lokasi') ? '#dc3545' : '#e9ecef' }}; width: 100%; padding: 12px 15px; transition: all 0.3s ease; font-size: 14px;"
+                    onfocus="this.style.borderColor='#212529'; this.style.boxShadow='0 0 0 3px rgba(13, 110, 253, 0.1)'"
+                    onblur="this.style.borderColor='{{ $errors->has('lokasi') ? '#dc3545' : '#e9ecef' }}'; this.style.boxShadow='none'"
                 >
                 @error('lokasi')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <p style="font-family: 'Jost', sans-serif; color: #dc3545; font-size: 12px; margin-top: 8px; display: flex; align-items: center; gap: 5px;">
+                        <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        {{ $message }}
+                    </p>
                 @enderror
             </div>
 
-            <div class="mb-4">
-                <label for="deskripsi" class="block text-gray-700 text-sm font-bold mb-2">
-                    Deskripsi Kejadian <span class="text-red-500">*</span>
+            <div style="margin-bottom: 30px;">
+                <label for="deskripsi" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Deskripsi Kejadian <span style="color: #dc3545;">*</span>
                 </label>
                 <textarea 
                     id="deskripsi" 
                     name="deskripsi" 
                     rows="5"
                     required
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('deskripsi') border-red-500 @enderror"
+                    class="kaira-input"
+                    style="font-family: 'Jost', sans-serif; border: 1px solid {{ $errors->has('deskripsi') ? '#dc3545' : '#e9ecef' }}; width: 100%; padding: 12px 15px; transition: all 0.3s ease; font-size: 14px; resize: none;"
+                    onfocus="this.style.borderColor='#212529'; this.style.boxShadow='0 0 0 3px rgba(13, 110, 253, 0.1)'"
+                    onblur="this.style.borderColor='{{ $errors->has('deskripsi') ? '#dc3545' : '#e9ecef' }}'; this.style.boxShadow='none'"
                 >{{ old('deskripsi', $laporan->deskripsi) }}</textarea>
                 @error('deskripsi')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <p style="font-family: 'Jost', sans-serif; color: #dc3545; font-size: 12px; margin-top: 8px; display: flex; align-items: center; gap: 5px;">
+                        <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        {{ $message }}
+                    </p>
                 @enderror
             </div>
 
             @if($laporan->bukti_files && count($laporan->bukti_files) > 0)
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">File Bukti Saat Ini</label>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div style="margin-bottom: 30px;">
+                    <label style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px;">File Bukti Saat Ini</label>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px;">
                         @foreach($laporan->bukti_files as $index => $file)
-                            <div class="border rounded-lg overflow-hidden relative">
+                            <div style="border: 1px solid #e9ecef; overflow: hidden; position: relative; background: white;">
                                 @if(str_ends_with($file, '.pdf'))
-                                    <div class="p-4 text-center">
-                                        <svg class="w-12 h-12 mx-auto text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div style="padding: 20px; text-align: center;">
+                                        <svg style="width: 48px; height: 48px; margin: 0 auto; color: #dc3545;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                                         </svg>
-                                        <p class="text-xs mt-2 text-gray-600">PDF</p>
+                                        <p style="font-family: 'Jost', sans-serif; font-size: 11px; margin-top: 8px; color: #8f8f8f;">PDF</p>
                                     </div>
                                 @else
-                                    <img src="{{ asset($file) }}" alt="Bukti" class="w-full h-32 object-cover">
+                                    <img src="{{ asset($file) }}" alt="Bukti" style="width: 100%; height: 120px; object-fit: cover;">
                                 @endif
-                                <label class="absolute top-2 right-2">
-                                    <input type="checkbox" name="delete_files[]" value="{{ $file }}" class="rounded">
-                                    <span class="text-xs text-red-600 ml-1">Hapus</span>
+                                <label style="position: absolute; top: 8px; right: 8px; background: rgba(255, 255, 255, 0.9); padding: 5px 10px; display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                                    <input type="checkbox" name="delete_files[]" value="{{ $file }}" style="cursor: pointer;">
+                                    <span style="font-family: 'Jost', sans-serif; font-size: 11px; color: #dc3545; font-weight: 500;">Hapus</span>
                                 </label>
                             </div>
                         @endforeach
@@ -137,39 +191,52 @@
                 </div>
             @endif
 
-            <div class="mb-6">
-                <label for="bukti_files" class="block text-gray-700 text-sm font-bold mb-2">
+            <div style="margin-bottom: 30px;">
+                <label for="bukti_files" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
                     Tambah File Bukti Baru
                 </label>
-                <input 
-                    type="file" 
-                    id="bukti_files" 
-                    name="bukti_files[]" 
-                    multiple
-                    accept="image/*,.pdf"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('bukti_files.*') border-red-500 @enderror"
-                    onchange="previewFiles(this)"
-                >
-                <p class="text-xs text-gray-500 mt-1">
+                <div style="position: relative;">
+                    <input 
+                        type="file" 
+                        id="bukti_files" 
+                        name="bukti_files[]" 
+                        multiple
+                        accept="image/*,.pdf"
+                        style="font-family: 'Jost', sans-serif; border: 1px dashed {{ $errors->has('bukti_files.*') ? '#dc3545' : '#e9ecef' }}; width: 100%; padding: 40px 15px; transition: all 0.3s ease; font-size: 14px; cursor: pointer; background-color: #f8f9fa;"
+                        onchange="previewFiles(this)"
+                        onmouseover="this.style.borderColor='#0d6efd'; this.style.backgroundColor='#e7f3ff'"
+                        onmouseout="this.style.borderColor='{{ $errors->has('bukti_files.*') ? '#dc3545' : '#e9ecef' }}'; this.style.backgroundColor='#f8f9fa'"
+                    >
+                </div>
+                <p style="font-family: 'Jost', sans-serif; font-size: 12px; color: #8f8f8f; margin-top: 10px;">
                     Format: JPG, PNG, PDF. Maksimal 5MB per file.
                 </p>
                 @error('bukti_files.*')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <p style="font-family: 'Jost', sans-serif; color: #dc3545; font-size: 12px; margin-top: 8px;">{{ $message }}</p>
                 @enderror
                 
                 <!-- Preview Container -->
-                <div id="filePreview" class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 hidden"></div>
+                <div id="filePreview" style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px;" class="hidden"></div>
             </div>
 
-            <div class="flex items-center justify-between">
-                <a href="{{ route('super-admin.laporan.show', $laporan) }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 30px; border-top: 1px solid #e9ecef;">
+                <a href="{{ route('super-admin.laporan.show', $laporan) }}" class="kaira-btn" style="font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 12px 30px; background-color: white; color: #212529; border: 1px solid #e9ecef; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s ease; font-size: 14px;" onmouseover="this.style.borderColor='#212529'; this.style.backgroundColor='#f8f9fa'" onmouseout="this.style.borderColor='#e9ecef'; this.style.backgroundColor='white'">
+                    <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
                     Batal
                 </a>
                 <button 
                     type="submit" 
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    class="kaira-btn kaira-btn-primary"
+                    style="font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 12px 30px; background-color: #212529; color: white; border: 1px solid #212529; cursor: pointer; transition: all 0.3s ease; font-size: 14px; display: inline-flex; align-items: center; gap: 10px;"
+                    onmouseover="this.style.backgroundColor='#0d6efd'; this.style.borderColor='#0d6efd'"
+                    onmouseout="this.style.backgroundColor='#212529'; this.style.borderColor='#212529'"
                 >
-                    Update Laporan
+                    <span>Update Laporan</span>
+                    <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
                 </button>
             </div>
         </form>
@@ -178,49 +245,78 @@
 
 @push('scripts')
 <script>
+    let selectedFiles = []; // Store selected files
+    
     function previewFiles(input) {
+        // Update selectedFiles array
+        selectedFiles = Array.from(input.files);
+        
+        updatePreview();
+    }
+    
+    function updatePreview() {
         const preview = document.getElementById('filePreview');
+        const input = document.getElementById('bukti_files');
         preview.innerHTML = '';
         
-        if (input.files && input.files.length > 0) {
+        if (selectedFiles.length > 0) {
             preview.classList.remove('hidden');
             
-            Array.from(input.files).forEach((file, index) => {
+            selectedFiles.forEach((file, index) => {
                 const div = document.createElement('div');
-                div.className = 'border rounded-lg overflow-hidden relative';
+                div.style.cssText = 'border: 1px solid #e9ecef; overflow: hidden; position: relative; background: white; transition: all 0.3s ease;';
+                div.setAttribute('data-file-index', index);
+                div.onmouseover = function() { this.style.borderColor = '#0d6efd'; this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.05)'; };
+                div.onmouseout = function() { this.style.borderColor = '#e9ecef'; this.style.boxShadow = 'none'; };
+                
+                // Cancel button
+                const cancelBtn = document.createElement('button');
+                cancelBtn.type = 'button';
+                cancelBtn.style.cssText = 'position: absolute; top: 8px; right: 8px; background-color: #dc3545; color: white; border: none; padding: 5px; cursor: pointer; z-index: 10; opacity: 0; transition: opacity 0.3s ease;';
+                cancelBtn.onmouseover = function() { this.style.opacity = '1'; };
+                cancelBtn.onmouseout = function() { this.style.opacity = '0'; };
+                cancelBtn.innerHTML = `
+                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                `;
+                cancelBtn.onclick = () => removeFile(index);
+                div.appendChild(cancelBtn);
                 
                 if (file.type.startsWith('image/')) {
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         const img = document.createElement('img');
                         img.src = e.target.result;
-                        img.className = 'w-full h-32 object-cover';
+                        img.style.cssText = 'width: 100%; height: 120px; object-fit: cover;';
                         div.appendChild(img);
                         
                         const nameDiv = document.createElement('div');
-                        nameDiv.className = 'p-2 bg-gray-50 text-xs text-gray-600 truncate';
+                        nameDiv.style.cssText = 'padding: 10px; background-color: #f8f9fa; font-family: Jost, sans-serif; font-size: 11px; color: #8f8f8f; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;';
                         nameDiv.textContent = file.name;
                         div.appendChild(nameDiv);
                     };
                     reader.readAsDataURL(file);
                 } else if (file.type === 'application/pdf') {
-                    div.innerHTML = `
-                        <div class="p-4 text-center">
-                            <svg class="w-12 h-12 mx-auto text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                            </svg>
-                            <p class="text-xs mt-2 text-gray-600 truncate">${file.name}</p>
-                        </div>
+                    const contentDiv = document.createElement('div');
+                    contentDiv.style.cssText = 'padding: 20px; text-align: center;';
+                    contentDiv.innerHTML = `
+                        <svg style="width: 48px; height: 48px; margin: 0 auto; color: #dc3545;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                        <p style="font-family: Jost, sans-serif; font-size: 11px; margin-top: 8px; color: #8f8f8f; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${file.name}</p>
                     `;
+                    div.appendChild(contentDiv);
                 } else {
-                    div.innerHTML = `
-                        <div class="p-4 text-center">
-                            <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                            </svg>
-                            <p class="text-xs mt-2 text-gray-600 truncate">${file.name}</p>
-                        </div>
+                    const contentDiv = document.createElement('div');
+                    contentDiv.style.cssText = 'padding: 20px; text-align: center;';
+                    contentDiv.innerHTML = `
+                        <svg style="width: 48px; height: 48px; margin: 0 auto; color: #8f8f8f;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                        <p style="font-family: Jost, sans-serif; font-size: 11px; margin-top: 8px; color: #8f8f8f; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${file.name}</p>
                     `;
+                    div.appendChild(contentDiv);
                 }
                 
                 preview.appendChild(div);
@@ -228,6 +324,24 @@
         } else {
             preview.classList.add('hidden');
         }
+    }
+    
+    function removeFile(index) {
+        // Remove file from selectedFiles array
+        selectedFiles.splice(index, 1);
+        
+        // Update file input using DataTransfer
+        const input = document.getElementById('bukti_files');
+        const dataTransfer = new DataTransfer();
+        
+        selectedFiles.forEach(file => {
+            dataTransfer.items.add(file);
+        });
+        
+        input.files = dataTransfer.files;
+        
+        // Update preview
+        updatePreview();
     }
 </script>
 @endpush

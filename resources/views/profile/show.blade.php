@@ -4,57 +4,57 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto">
-    <div class="mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">Profil Saya</h1>
-        <p class="text-gray-600 mt-2">Informasi akun Anda</p>
+    <div style="margin-bottom: 50px;">
+        <h1 class="kaira-section-heading" style="font-family: 'Marcellus', serif; font-size: 42px; color: #212529; margin-bottom: 10px; letter-spacing: 1px;">Profil Saya</h1>
+        <p style="font-family: 'Jost', sans-serif; color: #8f8f8f; font-size: 16px;">Informasi akun Anda</p>
     </div>
 
     @if(session('success'))
-        <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-            {{ session('success') }}
+        <div class="mb-4" style="background-color: #d1fae5; border-left: 4px solid #10b981; color: #065f46; padding: 15px; margin-bottom: 30px;">
+            <p style="font-family: 'Jost', sans-serif; font-size: 14px; margin: 0;">{{ session('success') }}</p>
         </div>
     @endif
 
-    <div class="bg-white rounded-lg shadow p-6 mb-6">
+    <div class="kaira-card" style="background: white; border: 1px solid #e9ecef; padding: 40px; margin-bottom: 30px;">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Nama</label>
-                <p class="mt-1 text-lg font-semibold text-gray-900">{{ $user->name }}</p>
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #8f8f8f; font-size: 13px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Nama</label>
+                <p style="font-family: 'Jost', sans-serif; font-size: 18px; font-weight: 500; color: #212529; margin: 0;">{{ $user->name }}</p>
             </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Email</label>
-                <p class="mt-1 text-lg font-semibold text-gray-900">{{ $user->email }}</p>
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #8f8f8f; font-size: 13px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Email</label>
+                <p style="font-family: 'Jost', sans-serif; font-size: 18px; font-weight: 500; color: #212529; margin: 0;">{{ $user->email }}</p>
             </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Role</label>
-                <span class="mt-1 inline-flex px-3 py-1 text-sm font-semibold rounded-full
-                    @if($user->role === 'super_admin') bg-purple-100 text-purple-800
-                    @elseif($user->role === 'admin') bg-blue-100 text-blue-800
-                    @else bg-green-100 text-green-800
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #8f8f8f; font-size: 13px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Role</label>
+                <span style="font-family: 'Jost', sans-serif; font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 14px; display: inline-block; margin-top: 8px;
+                    @if($user->role === 'super_admin') background-color: #f3e8ff; color: #7c3aed;
+                    @elseif($user->role === 'admin') background-color: #dbeafe; color: #2563eb;
+                    @else background-color: #dcfce7; color: #16a34a;
                     @endif">
                     {{ ucfirst(str_replace('_', ' ', $user->role)) }}
                 </span>
             </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Status</label>
-                <span class="mt-1 inline-flex px-3 py-1 text-sm font-semibold rounded-full
-                    @if($user->is_active) bg-green-100 text-green-800
-                    @else bg-red-100 text-red-800
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #8f8f8f; font-size: 13px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Status</label>
+                <span style="font-family: 'Jost', sans-serif; font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 14px; display: inline-block; margin-top: 8px;
+                    @if($user->is_active) background-color: #d1fae5; color: #10b981;
+                    @else background-color: #fee2e2; color: #ef4444;
                     @endif">
                     {{ $user->is_active ? 'Aktif' : 'Nonaktif' }}
                 </span>
             </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Terdaftar Sejak</label>
-                <p class="mt-1 text-gray-900">{{ $user->created_at->format('d M Y, H:i') }}</p>
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #8f8f8f; font-size: 13px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Terdaftar Sejak</label>
+                <p style="font-family: 'Jost', sans-serif; font-size: 15px; color: #212529; margin: 8px 0 0 0;">{{ $user->created_at->format('d M Y, H:i') }}</p>
             </div>
             
             @if($user->role === 'admin' && $user->instansi->count() > 0)
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-500">Instansi yang Dikelola</label>
-                    <div class="mt-2 flex flex-wrap gap-2">
+                <div style="grid-column: 1 / -1; margin-bottom: 25px;">
+                    <label style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #8f8f8f; font-size: 13px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Instansi yang Dikelola</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
                         @foreach($user->instansi as $instansi)
-                            <span class="inline-flex px-3 py-1 text-sm font-semibold rounded-full bg-blue-100 text-blue-800">
+                            <span style="font-family: 'Jost', sans-serif; font-weight: 500; font-size: 12px; padding: 6px 14px; background-color: #dbeafe; color: #2563eb; display: inline-block;">
                                 {{ $instansi->nama }}
                             </span>
                         @endforeach
@@ -63,151 +63,185 @@
             @endif
         </div>
 
-        <div class="mt-6 pt-6 border-t">
-            <a href="{{ route('profile.edit') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid #e9ecef;">
+            <a href="{{ route('profile.edit') }}" class="kaira-btn kaira-btn-primary" style="font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 12px 30px; background-color: #212529; color: white; border: 1px solid #212529; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s ease; font-size: 14px;" onmouseover="this.style.backgroundColor='#0d6efd'; this.style.borderColor='#0d6efd'" onmouseout="this.style.backgroundColor='#212529'; this.style.borderColor='#212529'">
                 Edit Profil
             </a>
         </div>
 
         <!-- Reset Token Section -->
-        <div class="mt-6 pt-6 border-t">
-            <label class="block text-sm font-bold text-gray-900 mb-2">
-                Token Reset Password 
-                <span class="text-red-500">*WAJIB DICATAT DAN DIINGAT*</span>
-            </label>
-            <div class="bg-red-50 border-2 border-red-300 rounded-lg p-4">
-                <div class="mb-3">
-                    <p class="text-sm font-semibold text-red-800 mb-2">
-                        ⚠️ PENTING: Token ini WAJIB Anda catat dan simpan dengan aman!
-                    </p>
-                    <p class="text-xs text-red-700 mb-3">
-                        Token ini digunakan untuk reset password jika Anda lupa password. 
-                        Tanpa token ini, Anda tidak bisa reset password sendiri. 
-                        Simpan di tempat yang aman dan mudah diingat!
+        <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid #e9ecef;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <label style="display: block; font-family: 'Jost', sans-serif; font-weight: 600; color: #212529; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Token Reset Password
+                    </label>
+                    <p style="font-family: 'Jost', sans-serif; font-size: 12px; color: #8f8f8f; margin: 0;">
+                        Simpan token ini dengan aman untuk reset password
                     </p>
                 </div>
-                <div class="flex items-start justify-between gap-4">
-                    <div class="flex-1">
-                        <code class="text-sm font-mono text-gray-900 bg-white px-4 py-3 rounded border-2 border-red-400 block break-all font-bold">
+                <form action="{{ route('profile.generateToken') }}" method="POST" style="flex-shrink: 0;" onsubmit="return kairaConfirmSubmit(event, '⚠️ PERINGATAN: Apakah Anda yakin ingin membuat token baru?\n\nToken lama tidak akan bisa digunakan lagi untuk reset password. Pastikan Anda sudah mencatat token baru dengan baik!', 'Buat Token Baru');">
+                    @csrf
+                    <button 
+                        type="submit" 
+                        class="kaira-btn"
+                        style="font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 10px 25px; background-color: #212529; color: white; border: 1px solid #212529; cursor: pointer; transition: all 0.3s ease; font-size: 13px;"
+                        onmouseover="this.style.backgroundColor='#0d6efd'; this.style.borderColor='#0d6efd'"
+                        onmouseout="this.style.backgroundColor='#212529'; this.style.borderColor='#212529'"
+                    >
+                        Buat Token Baru
+                    </button>
+                </form>
+            </div>
+            
+            <div style="background-color: #f8f9fa; border: 1px solid #e9ecef; padding: 20px;">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                    <div style="width: 40px; height: 40px; background-color: #fff4e6; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg style="width: 20px; height: 20px; color: #f59e0b;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                    </div>
+                    <div style="flex: 1;">
+                        <p style="font-family: 'Jost', sans-serif; font-size: 13px; color: #212529; margin: 0; line-height: 1.6;">
+                            Token ini digunakan untuk reset password jika Anda lupa password. Tanpa token ini, Anda tidak bisa reset password sendiri.
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <code style="font-family: 'Courier New', monospace; font-size: 13px; color: #212529; background-color: white; padding: 12px 15px; border: 1px solid #e9ecef; display: block; word-break: break-all; font-weight: 500; line-height: 1.6;">
                             {{ $user->reset_token ?? 'Token belum dibuat' }}
                         </code>
-                        <button 
-                            type="button" 
-                            onclick="copyToken()" 
-                            class="mt-2 text-xs bg-gray-500 hover:bg-gray-600 text-white font-bold py-1 px-3 rounded"
-                        >
-                            Salin Token
-                        </button>
                     </div>
-                    <form action="{{ route('profile.generateToken') }}" method="POST" class="flex-shrink-0">
-                        @csrf
-                        <button 
-                            type="submit" 
-                            class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded text-sm"
-                            onclick="return confirm('⚠️ PERINGATAN: Apakah Anda yakin ingin membuat token baru?\n\nToken lama tidak akan bisa digunakan lagi untuk reset password. Pastikan Anda sudah mencatat token baru dengan baik!')"
-                        >
-                            Buat Token Baru
-                        </button>
-                    </form>
+                    <button 
+                        type="button" 
+                        onclick="copyToken()" 
+                        class="kaira-btn"
+                        style="font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 12px 25px; background-color: #212529; color: white; border: 1px solid #212529; cursor: pointer; transition: all 0.3s ease; font-size: 13px; white-space: nowrap;"
+                        onmouseover="this.style.backgroundColor='#0d6efd'; this.style.borderColor='#0d6efd'"
+                        onmouseout="this.style.backgroundColor='#212529'; this.style.borderColor='#212529'"
+                    >
+                        Salin Token
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Change Password Section -->
-    <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-xl font-semibold text-gray-900 mb-4">Ubah Password</h2>
+    <div class="kaira-card" style="background: white; border: 1px solid #e9ecef; padding: 40px;">
+        <h2 style="font-family: 'Marcellus', serif; font-size: 28px; color: #212529; margin-bottom: 30px; letter-spacing: 0.5px;">Ubah Password</h2>
         
         <form method="POST" action="{{ route('profile.password.update') }}">
             @csrf
 
-            <div class="mb-4">
-                <label for="current_password" class="block text-gray-700 text-sm font-bold mb-2">
-                    Password Saat Ini <span class="text-red-500">*</span>
+            <div style="margin-bottom: 25px;">
+                <label for="current_password" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Password Saat Ini <span style="color: #dc3545;">*</span>
                 </label>
-                <div class="relative">
+                <div style="position: relative;">
                     <input 
                         type="password" 
                         id="current_password" 
                         name="current_password" 
                         required
-                        class="shadow appearance-none border rounded w-full py-2 px-3 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('current_password') border-red-500 @enderror"
+                        class="kaira-input"
+                        style="font-family: 'Jost', sans-serif; border: 1px solid {{ $errors->has('current_password') ? '#dc3545' : '#e9ecef' }}; width: 100%; padding: 12px 45px 12px 15px; transition: all 0.3s ease; font-size: 14px;"
                         placeholder="Masukkan password saat ini"
+                        onfocus="this.style.borderColor='#212529'; this.style.boxShadow='0 0 0 3px rgba(13, 110, 253, 0.1)'"
+                        onblur="this.style.borderColor='{{ $errors->has('current_password') ? '#dc3545' : '#e9ecef' }}'; this.style.boxShadow='none'"
                     >
                     <button 
                         type="button" 
                         onclick="togglePassword('current_password')"
-                        class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 hover:text-gray-800"
+                        style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #8f8f8f; padding: 0;"
                     >
-                        <svg id="eye-current_password" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg id="eye-current_password" style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                         </svg>
-                        <svg id="eye-off-current_password" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg id="eye-off-current_password" style="width: 20px; height: 20px; display: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
                         </svg>
                     </button>
                 </div>
                 @error('current_password')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <p style="font-family: 'Jost', sans-serif; color: #dc3545; font-size: 12px; margin-top: 8px; display: flex; align-items: center; gap: 5px;">
+                        <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        {{ $message }}
+                    </p>
                 @enderror
             </div>
 
-            <div class="mb-4">
-                <label for="password" class="block text-gray-700 text-sm font-bold mb-2">
-                    Password Baru <span class="text-red-500">*</span>
+            <div style="margin-bottom: 25px;">
+                <label for="password" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Password Baru <span style="color: #dc3545;">*</span>
                 </label>
-                <div class="relative">
+                <div style="position: relative;">
                     <input 
                         type="password" 
                         id="password" 
                         name="password" 
                         required
-                        class="shadow appearance-none border rounded w-full py-2 px-3 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('password') border-red-500 @enderror"
+                        class="kaira-input"
+                        style="font-family: 'Jost', sans-serif; border: 1px solid {{ $errors->has('password') ? '#dc3545' : '#e9ecef' }}; width: 100%; padding: 12px 45px 12px 15px; transition: all 0.3s ease; font-size: 14px;"
                         placeholder="Minimal 8 karakter"
+                        onfocus="this.style.borderColor='#212529'; this.style.boxShadow='0 0 0 3px rgba(13, 110, 253, 0.1)'"
+                        onblur="this.style.borderColor='{{ $errors->has('password') ? '#dc3545' : '#e9ecef' }}'; this.style.boxShadow='none'"
                     >
                     <button 
                         type="button" 
                         onclick="togglePassword('password')"
-                        class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 hover:text-gray-800"
+                        style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #8f8f8f; padding: 0;"
                     >
-                        <svg id="eye-password" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg id="eye-password" style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                         </svg>
-                        <svg id="eye-off-password" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg id="eye-off-password" style="width: 20px; height: 20px; display: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
                         </svg>
                     </button>
                 </div>
                 @error('password')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    <p style="font-family: 'Jost', sans-serif; color: #dc3545; font-size: 12px; margin-top: 8px; display: flex; align-items: center; gap: 5px;">
+                        <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        {{ $message }}
+                    </p>
                 @enderror
             </div>
 
-            <div class="mb-6">
-                <label for="password_confirmation" class="block text-gray-700 text-sm font-bold mb-2">
-                    Konfirmasi Password Baru <span class="text-red-500">*</span>
+            <div style="margin-bottom: 30px;">
+                <label for="password_confirmation" style="display: block; font-family: 'Jost', sans-serif; font-weight: 500; color: #212529; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Konfirmasi Password Baru <span style="color: #dc3545;">*</span>
                 </label>
-                <div class="relative">
+                <div style="position: relative;">
                     <input 
                         type="password" 
                         id="password_confirmation" 
                         name="password_confirmation" 
                         required
-                        class="shadow appearance-none border rounded w-full py-2 px-3 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="kaira-input"
+                        style="font-family: 'Jost', sans-serif; border: 1px solid #e9ecef; width: 100%; padding: 12px 45px 12px 15px; transition: all 0.3s ease; font-size: 14px;"
                         placeholder="Ulangi password baru"
+                        onfocus="this.style.borderColor='#212529'; this.style.boxShadow='0 0 0 3px rgba(13, 110, 253, 0.1)'"
+                        onblur="this.style.borderColor='#e9ecef'; this.style.boxShadow='none'"
                     >
                     <button 
                         type="button" 
                         onclick="togglePassword('password_confirmation')"
-                        class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 hover:text-gray-800"
+                        style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #8f8f8f; padding: 0;"
                     >
-                        <svg id="eye-password_confirmation" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg id="eye-password_confirmation" style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                         </svg>
-                        <svg id="eye-off-password_confirmation" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg id="eye-off-password_confirmation" style="width: 20px; height: 20px; display: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
                         </svg>
                     </button>
@@ -216,7 +250,10 @@
 
             <button 
                 type="submit" 
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                class="kaira-btn kaira-btn-primary"
+                style="font-family: 'Jost', sans-serif; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; padding: 12px 30px; background-color: #212529; color: white; border: 1px solid #212529; cursor: pointer; transition: all 0.3s ease; font-size: 14px;"
+                onmouseover="this.style.backgroundColor='#0d6efd'; this.style.borderColor='#0d6efd'"
+                onmouseout="this.style.backgroundColor='#212529'; this.style.borderColor='#212529'"
             >
                 Ubah Password
             </button>
@@ -226,31 +263,16 @@
 
 @push('scripts')
 <script>
-    function togglePassword(inputId) {
-        const input = document.getElementById(inputId);
-        const eye = document.getElementById('eye-' + inputId);
-        const eyeOff = document.getElementById('eye-off-' + inputId);
-        
-        if (input.type === 'password') {
-            input.type = 'text';
-            eye.classList.add('hidden');
-            eyeOff.classList.remove('hidden');
-        } else {
-            input.type = 'password';
-            eye.classList.remove('hidden');
-            eyeOff.classList.add('hidden');
-        }
-    }
 
     function copyToken() {
         const token = '{{ $user->reset_token ?? "" }}';
         if (!token) {
-            alert('Token belum tersedia');
+            kairaAlert('Token belum tersedia', 'Informasi');
             return;
         }
         
         navigator.clipboard.writeText(token).then(function() {
-            alert('Token berhasil disalin! Pastikan Anda menyimpannya di tempat yang aman.');
+            kairaAlert('Token berhasil disalin! Pastikan Anda menyimpannya di tempat yang aman.', 'Berhasil');
         }, function() {
             // Fallback untuk browser yang tidak support clipboard API
             const textarea = document.createElement('textarea');
@@ -259,7 +281,7 @@
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
-            alert('Token berhasil disalin! Pastikan Anda menyimpannya di tempat yang aman.');
+            kairaAlert('Token berhasil disalin! Pastikan Anda menyimpannya di tempat yang aman.', 'Berhasil');
         });
     }
 </script>
